@@ -30,6 +30,24 @@
 		07000F962C47BEAF00F40775 /* AdjustBridgeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 07000F912C47BEAF00F40775 /* AdjustBridgeConstants.m */; };
 		07000F972C47BEAF00F40775 /* AdjustBridgeConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 07000F912C47BEAF00F40775 /* AdjustBridgeConstants.m */; };
 		071684DE2C0471C800B8B9FD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 07BFEAA12A49E3DA004E29D9 /* PrivacyInfo.xcprivacy */; };
+		07A72CCF2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CD02F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CD12F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CD22F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CD32F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CD42F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CD52F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CD62F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CD72F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CD82F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CD92F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CDA2F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CDB2F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CDC2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CDD2F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
+		07A72CDE2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CDF2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07A72CE02F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */; };
 		07BC5A982D79DCE9006CC345 /* ADJStoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07BC5A972D79DCE9006CC345 /* ADJStoreInfo.m */; };
 		07BC5A992D79DCE9006CC345 /* ADJStoreInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 07BC5A962D79DCE9006CC345 /* ADJStoreInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		07BC5A9A2D79DCE9006CC345 /* ADJStoreInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 07BC5A972D79DCE9006CC345 /* ADJStoreInfo.m */; };
@@ -829,13 +847,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0A4EBA8F2ED8BE0800286E99 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6F0842182007766700568A31 /* AdjustTestLibrary.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0A57BDDA2EAFD6E2003F4FC7;
-			remoteInfo = AdjustTestLibrarySimulatorOnly;
-		};
 		52BD7389221C3EDC004F2E87 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 52BD7374221C3EDB004F2E87 /* PocketSocket.xcodeproj */;
@@ -994,6 +1005,8 @@
 /* Begin PBXFileReference section */
 		07000F902C47BEAF00F40775 /* AdjustBridgeConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdjustBridgeConstants.h; sourceTree = "<group>"; };
 		07000F912C47BEAF00F40775 /* AdjustBridgeConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdjustBridgeConstants.m; sourceTree = "<group>"; };
+		07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADJThirdPartySharingResult.h; sourceTree = "<group>"; };
+		07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADJThirdPartySharingResult.m; sourceTree = "<group>"; };
 		07BC5A962D79DCE9006CC345 /* ADJStoreInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADJStoreInfo.h; sourceTree = "<group>"; };
 		07BC5A972D79DCE9006CC345 /* ADJStoreInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADJStoreInfo.m; sourceTree = "<group>"; };
 		07BFEAA12A49E3DA004E29D9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -1425,6 +1438,8 @@
 				07BC5A972D79DCE9006CC345 /* ADJStoreInfo.m */,
 				9D651BF425B25A64006D69D6 /* ADJThirdPartySharing.h */,
 				9D651BE125B25A64006D69D6 /* ADJThirdPartySharing.m */,
+				07A72CCD2F88DE240075E1AC /* ADJThirdPartySharingResult.h */,
+				07A72CCE2F88DE240075E1AC /* ADJThirdPartySharingResult.m */,
 				96E5E34C18BBB48A008E7B30 /* Adjust.h */,
 				96E5E34D18BBB48A008E7B30 /* Adjust.m */,
 				9DB561722C072B060004CCAD /* Internal */,
@@ -1640,6 +1655,7 @@
 				0A584CF32C3E95BF0071A651 /* ADJGlobalParameters.h in Headers */,
 				0A584CF42C3E95BF0071A651 /* ADJPackageBuilder.h in Headers */,
 				0A584CF52C3E95BF0071A651 /* ADJPackageHandler.h in Headers */,
+				07A72CD12F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584CF62C3E95BF0071A651 /* ADJPackageParams.h in Headers */,
 				0A584CF72C3E95BF0071A651 /* ADJPurchaseVerificationHandler.h in Headers */,
 				0A584CF82C3E95BF0071A651 /* ADJRequestHandler.h in Headers */,
@@ -1690,6 +1706,7 @@
 				0A584D1A2C3E96390071A651 /* ADJGlobalParameters.h in Headers */,
 				0A584D1B2C3E96390071A651 /* ADJPackageBuilder.h in Headers */,
 				0A584D1C2C3E96390071A651 /* ADJPackageHandler.h in Headers */,
+				07A72CD52F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584D1D2C3E96390071A651 /* ADJPackageParams.h in Headers */,
 				0A584D1E2C3E96390071A651 /* ADJPurchaseVerificationHandler.h in Headers */,
 				0A584D1F2C3E96390071A651 /* ADJRequestHandler.h in Headers */,
@@ -1740,6 +1757,7 @@
 				0A584D412C3E96960071A651 /* ADJGlobalParameters.h in Headers */,
 				0A584D422C3E96960071A651 /* ADJPackageBuilder.h in Headers */,
 				0A584D432C3E96960071A651 /* ADJPackageHandler.h in Headers */,
+				07A72CD72F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584D442C3E96960071A651 /* ADJPackageParams.h in Headers */,
 				0A584D452C3E96960071A651 /* ADJPurchaseVerificationHandler.h in Headers */,
 				0A584D462C3E96960071A651 /* ADJRequestHandler.h in Headers */,
@@ -1798,6 +1816,7 @@
 				0A584D722C3E97020071A651 /* ADJRequestHandler.h in Headers */,
 				0A584D732C3E97020071A651 /* ADJResponseData.h in Headers */,
 				0A584D742C3E97020071A651 /* ADJSdkClickHandler.h in Headers */,
+				07A72CCF2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584D752C3E97020071A651 /* ADJSKAdNetwork.h in Headers */,
 				07D5CB102C57DA2400C112DC /* AdjustBridgeUtil.h in Headers */,
 				0A584D762C3E97020071A651 /* ADJTimerCycle.h in Headers */,
@@ -1840,6 +1859,7 @@
 				9601CAE41C74B70600670879 /* ADJEventSuccess.h in Headers */,
 				9D3A2ABF2625BEB800BD6E44 /* ADJAdRevenue.h in Headers */,
 				9DB561852C072BA10004CCAD /* ADJUrlStrategy.h in Headers */,
+				07A72CD92F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584B9D2C3E937E0071A651 /* AdjustSdk.h in Headers */,
 				6FAB784C2636DC0E00773869 /* ADJLinkResolution.h in Headers */,
 				9D651BF625B25A64006D69D6 /* ADJThirdPartySharing.h in Headers */,
@@ -1894,6 +1914,7 @@
 				0A584CC42C3E95700071A651 /* ADJActivityHandler.h in Headers */,
 				0A584CC52C3E95700071A651 /* ADJActivityKind.h in Headers */,
 				9DEA89E42EE0893A00D02468 /* ADJRemoteTrigger.h in Headers */,
+				07A72CD42F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584CC62C3E95700071A651 /* ADJActivityPackage.h in Headers */,
 				0A584CC72C3E95700071A651 /* ADJActivityState.h in Headers */,
 				0A584CC82C3E95700071A651 /* ADJAdditions.h in Headers */,
@@ -1944,6 +1965,7 @@
 				0A584C202C3E94B50071A651 /* ADJSessionSuccess.h in Headers */,
 				0A584C212C3E94B50071A651 /* ADJThirdPartySharing.h in Headers */,
 				0A584C222C3E94B50071A651 /* Adjust.h in Headers */,
+				07A72CDE2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584C232C3E94B50071A651 /* AdjustSdk.h in Headers */,
 				0A584C242C3E94C70071A651 /* ADJActivityHandler.h in Headers */,
 				0A584C252C3E94C70071A651 /* ADJActivityKind.h in Headers */,
@@ -1994,6 +2016,7 @@
 				0A584BD52C3E944F0071A651 /* ADJSessionSuccess.h in Headers */,
 				0A584BD62C3E944F0071A651 /* ADJThirdPartySharing.h in Headers */,
 				0A584BD72C3E944F0071A651 /* Adjust.h in Headers */,
+				07A72CDF2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584BD82C3E944F0071A651 /* AdjustSdk.h in Headers */,
 				0A584BD92C3E945D0071A651 /* ADJActivityHandler.h in Headers */,
 				0A584BDA2C3E945D0071A651 /* ADJActivityKind.h in Headers */,
@@ -2043,6 +2066,7 @@
 				0A584C6A2C3E94FA0071A651 /* ADJSessionFailure.h in Headers */,
 				0A584C6B2C3E94FA0071A651 /* ADJSessionSuccess.h in Headers */,
 				0A584C6C2C3E94FA0071A651 /* ADJThirdPartySharing.h in Headers */,
+				07A72CDC2F88DE240075E1AC /* ADJThirdPartySharingResult.h in Headers */,
 				0A584C6D2C3E94FA0071A651 /* Adjust.h in Headers */,
 				0A584C6E2C3E94FA0071A651 /* AdjustSdk.h in Headers */,
 				0A584C6F2C3E950A0071A651 /* ADJActivityHandler.h in Headers */,
@@ -2441,13 +2465,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0A4EBA902ED8BE0800286E99 /* libAdjustTestLibrary.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAdjustTestLibrary.a;
-			remoteRef = 0A4EBA8F2ED8BE0800286E99 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		52BD738A221C3EDC004F2E87 /* libPocketSocket.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2769,6 +2786,7 @@
 				9D775B522A1F4B3C009D0BE8 /* ADJAppStorePurchase.m in Sources */,
 				9D775B5B2A1F7C8B009D0BE8 /* ADJPurchaseVerificationResult.m in Sources */,
 				0AB1C9AD27DD4B3200509231 /* ADJSessionSuccess.m in Sources */,
+				07A72CD22F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0AB1C9AE27DD4B3200509231 /* ADJSessionFailure.m in Sources */,
 				0AB1C9AF27DD4B3200509231 /* ADJEventSuccess.m in Sources */,
 				0AB1C9B027DD4B3200509231 /* ADJEventFailure.m in Sources */,
@@ -2818,6 +2836,7 @@
 				9D775B532A1F4B3D009D0BE8 /* ADJAppStorePurchase.m in Sources */,
 				9D775B5C2A1F7C8C009D0BE8 /* ADJPurchaseVerificationResult.m in Sources */,
 				0AB1CA4527DF49CC00509231 /* ADJSessionSuccess.m in Sources */,
+				07A72CD62F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0AB1CA4627DF49CC00509231 /* ADJSessionFailure.m in Sources */,
 				0AB1CA4727DF49CC00509231 /* ADJEventSuccess.m in Sources */,
 				0AB1CA4827DF49CC00509231 /* ADJEventFailure.m in Sources */,
@@ -2867,6 +2886,7 @@
 				9D775B542A1F4B3D009D0BE8 /* ADJAppStorePurchase.m in Sources */,
 				9D775B5D2A1F7C8C009D0BE8 /* ADJPurchaseVerificationResult.m in Sources */,
 				0AB1CA8827DF61F200509231 /* ADJSessionSuccess.m in Sources */,
+				07A72CD82F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0AB1CA8927DF61F200509231 /* ADJSessionFailure.m in Sources */,
 				0AB1CA8A27DF61F200509231 /* ADJEventSuccess.m in Sources */,
 				0AB1CA8B27DF61F200509231 /* ADJEventFailure.m in Sources */,
@@ -2927,6 +2947,7 @@
 				0AB1CB2727DF68C100509231 /* ADJAppStoreSubscription.m in Sources */,
 				0AB1CB2827DF68C100509231 /* ADJUrlStrategy.m in Sources */,
 				0AB1CB2927DF68C100509231 /* ADJThirdPartySharing.m in Sources */,
+				07A72CD02F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0AEB8A2F2D8457E50089F15C /* ADJOdmManager.m in Sources */,
 				9D7D3DFD2C49A8B200FACB18 /* ADJDeeplink.m in Sources */,
 				0AB1CB2A27DF68C100509231 /* ADJAdRevenue.m in Sources */,
@@ -2988,6 +3009,7 @@
 				960A8BB91A029A8000F2BB95 /* ADJConfig.m in Sources */,
 				9D775B3F2A1F4B19009D0BE8 /* ADJAppStorePurchase.m in Sources */,
 				9D775B5A2A1F7C7A009D0BE8 /* ADJPurchaseVerificationResult.m in Sources */,
+				07A72CDA2F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				96854A5A1B1F2779002B2874 /* ADJTimerOnce.m in Sources */,
 				96854A601B1F278C002B2874 /* ADJTimerCycle.m in Sources */,
 				9D3A2ABE2625BEB800BD6E44 /* ADJAdRevenue.m in Sources */,
@@ -3048,6 +3070,7 @@
 				0A584CA52C3E952C0071A651 /* ADJTimerCycle.m in Sources */,
 				0A584CA62C3E952C0071A651 /* ADJTimerOnce.m in Sources */,
 				0A584CA72C3E952C0071A651 /* ADJUrlStrategy.m in Sources */,
+				07A72CD32F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0AEB8A282D8457E50089F15C /* ADJOdmManager.m in Sources */,
 				9D7D3DF52C49A8B200FACB18 /* ADJDeeplink.m in Sources */,
 				0A584CA82C3E952C0071A651 /* ADJUserDefaults.m in Sources */,
@@ -3098,6 +3121,7 @@
 				0A584C052C3E949B0071A651 /* ADJBackoffStrategy.m in Sources */,
 				0A584C062C3E949B0071A651 /* ADJGlobalParameters.m in Sources */,
 				0A584C072C3E949B0071A651 /* ADJPackageBuilder.m in Sources */,
+				07A72CDD2F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0A584C082C3E949B0071A651 /* ADJPackageHandler.m in Sources */,
 				0A584C092C3E949B0071A651 /* ADJPackageParams.m in Sources */,
 				0A584C0A2C3E949B0071A651 /* ADJPurchaseVerificationHandler.m in Sources */,
@@ -3147,6 +3171,7 @@
 				0A584BBA2C3E94240071A651 /* ADJBackoffStrategy.m in Sources */,
 				0A584BBB2C3E94240071A651 /* ADJGlobalParameters.m in Sources */,
 				0A584BBC2C3E94240071A651 /* ADJPackageBuilder.m in Sources */,
+				07A72CE02F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0A584BBD2C3E94240071A651 /* ADJPackageHandler.m in Sources */,
 				0A584BBE2C3E94240071A651 /* ADJPackageParams.m in Sources */,
 				0A584BBF2C3E94240071A651 /* ADJPurchaseVerificationHandler.m in Sources */,
@@ -3196,6 +3221,7 @@
 				0A584C502C3E94E70071A651 /* ADJBackoffStrategy.m in Sources */,
 				0A584C512C3E94E70071A651 /* ADJGlobalParameters.m in Sources */,
 				0A584C522C3E94E70071A651 /* ADJPackageBuilder.m in Sources */,
+				07A72CDB2F88DE240075E1AC /* ADJThirdPartySharingResult.m in Sources */,
 				0A584C532C3E94E70071A651 /* ADJPackageHandler.m in Sources */,
 				0A584C542C3E94E70071A651 /* ADJPackageParams.m in Sources */,
 				0A584C552C3E94E70071A651 /* ADJPurchaseVerificationHandler.m in Sources */,

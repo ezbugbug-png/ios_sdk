@@ -40,6 +40,7 @@
 
 @property (nonatomic, strong) ADJAttributionGetterBlock _Nullable attributionCallback;
 @property (nonatomic, strong) ADJAdidGetterBlock _Nullable adidCallback;
+@property (nonatomic, strong) ADJThirdPartySharingGetterBlock _Nullable thirdPartySharingCallback;
 @property (nonatomic, assign) NSInteger timeoutMs;
 @property (nonatomic, strong) dispatch_block_t _Nullable timeoutBlock;
 
@@ -47,6 +48,8 @@
                                            timeoutMs:(NSInteger)timeoutMs;
 - (instancetype _Nonnull)initWithAdidCallback:(ADJAdidGetterBlock _Nonnull)adidCallback
                                     timeoutMs:(NSInteger)timeoutMs;
+- (instancetype _Nonnull)initWithThirdPartySharingCallback:(ADJThirdPartySharingGetterBlock _Nonnull)thirdPartySharingCallback
+                                                 timeoutMs:(NSInteger)timeoutMs;
 
 @end
 
@@ -57,6 +60,7 @@
 @property (nonatomic, strong) NSMutableArray * _Nonnull cachedAdidReadCallbacksArray;
 @property (nonatomic, strong) NSMutableArray * _Nonnull cachedAttributionTimeoutCallbacksArray;
 @property (nonatomic, strong) NSMutableArray * _Nonnull cachedAdidTimeoutCallbacksArray;
+@property (nonatomic, strong) NSMutableArray * _Nonnull cachedThirdPartySharingTimeoutCallbacksArray;
 
 @property (nonatomic, copy) NSNumber *_Nullable enabled;
 @property (nonatomic, assign) BOOL offline;
@@ -88,6 +92,7 @@
 - (void)launchSessionResponseTasks:(ADJSessionResponseData * _Nullable)sessionResponseData;
 - (void)launchSdkClickResponseTasks:(ADJSdkClickResponseData * _Nullable)sdkClickResponseData;
 - (void)launchAttributionResponseTasks:(ADJAttributionResponseData * _Nullable)attributionResponseData;
+- (void)launchThirdPartySharingResponseTasks:(ADJThirdPartySharingResponseData * _Nullable)thirdPartySharingResponseData;
 - (void)setEnabled:(BOOL)enabled;
 - (void)isEnabledWithCompletionHandler:(nonnull ADJIsEnabledGetterBlock)completion;
 - (BOOL)isGdprForgotten;
@@ -127,6 +132,7 @@
 - (void)attributionWithTimeoutCallback:(nonnull ADJTimeoutCallback *)timeoutCallback;
 - (void)adidWithCompletionHandler:(nonnull ADJAdidGetterBlock)completion;
 - (void)adidWithTimeoutCallback:(nonnull ADJTimeoutCallback *)timeoutCallback;
+- (void)thirdPartySharingWithTimeoutCallback:(nonnull ADJTimeoutCallback *)timeoutCallback;
 - (void)setCoppaComplianceInDelay:(BOOL)isCoppaComplianceEnabled;
 - (void)setExternalDeviceIdInDelay:(nullable NSString *)externalDeviceId;
 - (void)verifyAndTrackAppStorePurchase:(nonnull ADJEvent *)event

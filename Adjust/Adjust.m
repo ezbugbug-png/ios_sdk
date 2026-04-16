@@ -290,6 +290,14 @@ static dispatch_once_t onceToken = 0;
     }
 }
 
++ (void)thirdPartySharingSettingsWithTimeout:(NSInteger)timeoutMs
+                           completionHandler:(nonnull ADJThirdPartySharingGetterBlock)completion {
+    @synchronized (self) {
+        [[Adjust getInstance] thirdPartySharingSettingsWithTimeout:timeoutMs
+                                                 completionHandler:completion];
+    }
+}
+
 + (void)lastDeeplinkWithCompletionHandler:(nonnull ADJLastDeeplinkGetterBlock)completion {
     @synchronized (self) {
         [[Adjust getInstance] lastDeeplinkWithCompletionHandler:completion];
@@ -598,6 +606,64 @@ static dispatch_once_t onceToken = 0;
     [self.savedPreLaunch.preLaunchActionsArray addObject:^(ADJActivityHandler *activityHandler) {
         [activityHandler tryTrackThirdPartySharingI:thirdPartySharingSnapshot];
     }];
+}
+
+- (void)thirdPartySharingSettingsWithTimeout:(NSInteger)timeoutMs
+                           completionHandler:(nonnull ADJThirdPartySharingGetterBlock)completion {
+    if (completion == nil) {
+        [self.logger error:@"Completion block for getting third party sharing settings can't be null"];
+        return;
+    }
+
+    if (timeoutMs < 0) {
+        [self.logger error:@"Timeout value for getting third party sharing settings can't be negative"];
+        return;
+    }
+
+    BOOL activityHandlerAvailable = [self checkActivityHandler:@"read third party sharing settings request with timeout"];
+    if (!activityHandlerAvailable) {
+        ADJThirdPartySharingResult *thirdPartySharingResult = [ADJUserDefaults getThirdPartySharingResult];
+        if (thirdPartySharingResult != nil) {
+            [ADJUtil launchInMainThread:^{
+                completion(thirdPartySharingResult);
+            }];
+            return;
+        }
+    }
+
+    ADJTimeoutCallback *timeoutCallback =
+        [[ADJTimeoutCallback alloc] initWithThirdPartySharingCallback:completion timeoutMs:timeoutMs];
+    NSMutableArray *timeoutCallbacksArray = self.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray;
+    dispatch_block_t timeoutBlock = dispatch_block_create(0, ^{
+        if (timeoutCallback.thirdPartySharingCallback != nil) {
+            BOOL executeCallback = NO;
+            @synchronized (timeoutCallbacksArray) {
+                if ([timeoutCallbacksArray containsObject:timeoutCallback]) {
+                    [timeoutCallbacksArray removeObject:timeoutCallback];
+                    executeCallback = YES;
+                }
+            }
+            if (executeCallback) {
+                [ADJUtil launchInMainThread:^{
+                    if (timeoutCallback.thirdPartySharingCallback != nil) {
+                        timeoutCallback.thirdPartySharingCallback(nil);
+                        timeoutCallback.thirdPartySharingCallback = nil;
+                        timeoutCallback.timeoutBlock = nil;
+                    }
+                }];
+            }
+        }
+    });
+    timeoutCallback.timeoutBlock = timeoutBlock;
+
+    if (!activityHandlerAvailable) {
+        [timeoutCallbacksArray addObject:timeoutCallback];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeoutMs * NSEC_PER_MSEC)),
+                       dispatch_get_main_queue(),
+                       timeoutBlock);
+    } else {
+        [self.activityHandler thirdPartySharingWithTimeoutCallback:timeoutCallback];
+    }
 }
 
 - (void)trackMeasurementConsent:(BOOL)enabled {

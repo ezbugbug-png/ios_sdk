@@ -25,6 +25,8 @@ static NSString * const PREFS_KEY_LAST_SKAN_UPDATE_DATA = @"adj_last_skan_update
 static NSString * const PREFS_KEY_APP_FIRST_LAUNCH_TIME = @"adj_app_first_launch_time";
 static NSString * const PREFS_KEY_GOOGLE_ODM_INFO = @"adj_google_odm_info";
 static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_info_processed";
+static NSString * const PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS = @"adj_third_party_sharing_settings";
+static NSString * const PREFS_KEY_THIRD_PARTY_SHARING_ERROR = @"adj_third_party_sharing_error";
 
 @implementation ADJUserDefaults
 
@@ -190,6 +192,31 @@ static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_i
     return [[NSUserDefaults standardUserDefaults] boolForKey:PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED];
 }
 
++ (void)saveThirdPartySharingResult:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    [[NSUserDefaults standardUserDefaults] setObject:thirdPartySharingResult.thirdPartySharingSettings
+                                              forKey:PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS];
+    [[NSUserDefaults standardUserDefaults] setObject:thirdPartySharingResult.error
+                                              forKey:PREFS_KEY_THIRD_PARTY_SHARING_ERROR];
+}
+
++ (ADJThirdPartySharingResult *)getThirdPartySharingResult {
+    NSDictionary *thirdPartySharingSettings = [[NSUserDefaults standardUserDefaults]
+                                               dictionaryForKey:PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS];
+    NSString *error = [[NSUserDefaults standardUserDefaults] stringForKey:PREFS_KEY_THIRD_PARTY_SHARING_ERROR];
+
+    if (thirdPartySharingSettings == nil && error.length == 0) {
+        return nil;
+    }
+
+    return [[ADJThirdPartySharingResult alloc] initWithThirdPartySharingSettings:thirdPartySharingSettings
+                                                                           error:error];
+}
+
++ (void)removeThirdPartySharingResult {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_THIRD_PARTY_SHARING_ERROR];
+}
+
 + (void)clearAdjustStuff {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_PUSH_TOKEN_DATA];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_PUSH_TOKEN_STRING];
@@ -208,6 +235,8 @@ static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_i
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_APP_FIRST_LAUNCH_TIME];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_GOOGLE_ODM_INFO];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_THIRD_PARTY_SHARING_ERROR];
 }
 
 @end

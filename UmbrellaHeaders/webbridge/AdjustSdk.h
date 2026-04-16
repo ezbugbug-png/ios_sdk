@@ -26,6 +26,7 @@
 #import <AdjustSdk/ADJDeeplink.h>
 #import <AdjustSdk/ADJStoreInfo.h>
 #import <AdjustSdk/ADJRemoteTrigger.h>
+#import <AdjustSdk/ADJThirdPartySharingResult.h>
 
 #import <AdjustSdk/AdjustBridge.h>
 #import <AdjustSdk/AdjustBridgeRegister.h>
