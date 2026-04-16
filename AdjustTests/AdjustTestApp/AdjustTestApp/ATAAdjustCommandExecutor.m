@@ -110,6 +110,8 @@
         [self adidGetter:parameters];
     } else if ([methodName isEqualToString:@"adidGetterWithTimeout"]) {
         [self adidGetterWithTimeout:parameters];
+    }  else if ([methodName isEqualToString:@"tpsSettingsGetter"]) {
+        [self tpsSettingsGetterWithTimeout:parameters];
     } else if ([methodName isEqualToString:@"endFirstSessionDelay"]) {
         [self endFirstSessionDelay:parameters];
     } else if ([methodName isEqualToString:@"coppaComplianceInDelay"]) {
@@ -963,6 +965,38 @@
             [self.testLibrary addInfoToSend:@"adid" value:adid];
         } else {
             [self.testLibrary addInfoToSend:@"adid" value:@"nil"];
+        }
+        [self.testLibrary addInfoToSend:@"test_callback_id" value:testCallbackId];
+        [self.testLibrary sendInfoToServer:self.extraPath];
+    }];
+}
+
+- (void)tpsSettingsGetterWithTimeout:(NSDictionary *)parameters {
+    NSString *timeoutS = [parameters objectForKey:@"timeout"][0];
+    int timeout = [timeoutS intValue];
+    NSString *testCallbackId = [parameters objectForKey:@"testCallbackId"][0];
+
+    [Adjust thirdPartySharingSettingsWithTimeout:timeout
+                               completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharingResult) {
+        if (thirdPartySharingResult != nil) {
+            if (thirdPartySharingResult.thirdPartySharingSettings != nil) {
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:thirdPartySharingResult.thirdPartySharingSettings
+                                                                   options:0
+                                                                     error:nil];
+                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                [self.testLibrary addInfoToSend:@"third_party_sharing" value:jsonString];
+            } else {
+                [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
+            }
+
+            if (thirdPartySharingResult.error != nil) {
+                [self.testLibrary addInfoToSend:@"error" value:thirdPartySharingResult.error];
+            } else {
+                [self.testLibrary addInfoToSend:@"error" value:@"nil"];
+            }
+        } else {
+            [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
+            [self.testLibrary addInfoToSend:@"error" value:@"nil"];
         }
         [self.testLibrary addInfoToSend:@"test_callback_id" value:testCallbackId];
         [self.testLibrary sendInfoToServer:self.extraPath];
