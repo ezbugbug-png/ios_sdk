@@ -2,8 +2,8 @@
 //var urlOverwrite = 'http://127.0.0.1:8080';
 //var controlUrl = 'ws://127.0.0.1:1987';
 // device
-var urlOverwrite = 'http://192.168.86.245:8080';
-var controlUrl = 'ws://192.168.86.245:1987';
+var urlOverwrite = 'http://192.168.8.195:8080';
+var controlUrl = 'ws://192.168.8.195:1987';
 
 // local reference of the command executor
 // originally it was this.adjustCommandExecutor of TestLibraryBridge var
@@ -755,6 +755,35 @@ AdjustCommandExecutor.prototype.adidGetterWithTimeout = function(params) {
         } else {
             addInfoToSend('adid', 'nil');
         }
+        addInfoToSend('test_callback_id', testCallbackId);
+        sendInfoToServer(extraPath);
+    });
+};
+
+AdjustCommandExecutor.prototype.tpsSettingsGetterWithTimeout = function(params) {
+    var extraPath = this.extraPath;
+    var timeoutS = getFirstValue(params, 'timeout');
+    var timeout = parseInt(timeoutS);
+    var testCallbackId = getFirstValue(params, 'testCallbackId');
+
+    Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(result) {
+        if (result != null) {
+            if (result.thirdPartySharingSettings != null) {
+                addInfoToSend('third_party_sharing', JSON.stringify(result.thirdPartySharingSettings));
+            } else {
+                addInfoToSend('third_party_sharing', 'nil');
+            }
+
+            if (result.error != null) {
+                addInfoToSend('error', result.error);
+            } else {
+                addInfoToSend('error', 'nil');
+            }
+        } else {
+            addInfoToSend('third_party_sharing', 'nil');
+            addInfoToSend('error', 'nil');
+        }
+
         addInfoToSend('test_callback_id', testCallbackId);
         sendInfoToServer(extraPath);
     });

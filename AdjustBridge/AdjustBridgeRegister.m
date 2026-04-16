@@ -211,6 +211,12 @@ static NSString * fbAppIdStatic = nil;
                 this._postMessage("adjust_getAttributionWithTimeout", { timeoutMs: timeoutMs }, callbackId);
             },
 
+            getThirdPartySharingSettingsWithTimeout: function(timeoutMs, getThirdPartySharingCallbackWithTimeout) {
+                const callbackId = window.randomCallbackIdWithPrefix("adjust_getThirdPartySharingSettingsWithTimeout");
+                this._handleGetterFromObjC(getThirdPartySharingCallbackWithTimeout, callbackId);
+                this._postMessage("adjust_getThirdPartySharingSettingsWithTimeout", { timeoutMs: timeoutMs }, callbackId);
+            },
+
             trackEvent: function(adjustEvent) {
                 this._postMessage("adjust_trackEvent", adjustEvent);
             },

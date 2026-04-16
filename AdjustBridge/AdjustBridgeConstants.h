@@ -49,6 +49,7 @@ FOUNDATION_EXPORT NSString * const ADJWBGetAdidMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBGetAttributionMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBGetAdidWithTimeoutMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBGetAttributionWithTimeoutMethodName;
+FOUNDATION_EXPORT NSString * const ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBAppTrackingAuthorizationStatus;
 
 FOUNDATION_EXPORT NSString * const ADJWBAppTokenConfigKey;

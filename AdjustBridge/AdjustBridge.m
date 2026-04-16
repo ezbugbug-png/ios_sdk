@@ -151,6 +151,11 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
         [Adjust attributionWithTimeout:[timeoutMs integerValue] completionHandler:^(ADJAttribution * _Nullable attribution) {
             [self execJsCallbackWithId:callbackId callbackData:[attribution dictionary]];
         }];
+    } else if ([methodName isEqual:ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName]) {
+        NSNumber *timeoutMs = [parameters objectForKey:@"timeoutMs"];
+        [Adjust thirdPartySharingSettingsWithTimeout:[timeoutMs integerValue] completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharing) {
+            [self execJsCallbackWithId:callbackId callbackData:[thirdPartySharing dictionary]];
+        }];
     } else if ([methodName isEqual:ADJWBIsEnabledMethodName]) {
         [Adjust isEnabledWithCompletionHandler:^(BOOL isEnabled) {
             [self execJsCallbackWithId:callbackId callbackData:@(isEnabled).description];
