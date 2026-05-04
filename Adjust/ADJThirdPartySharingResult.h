@@ -12,10 +12,7 @@
 
 @property (nonatomic, copy, nonnull) NSDictionary <NSString *, id> *thirdPartySharingSettings;
 
-@property (nonatomic, copy, nonnull) NSString *error;
-
-- (nonnull instancetype)initWithThirdPartySharingSettings:(nonnull NSDictionary<NSString *, id> *)thirdPartySharingSettings
-                                                     error:(nonnull NSString *)error;
+- (nonnull instancetype)initWithThirdPartySharingSettings:(nonnull NSDictionary<NSString *, id> *)thirdPartySharingSettings;
 
 - (nullable NSDictionary *)dictionary;
 

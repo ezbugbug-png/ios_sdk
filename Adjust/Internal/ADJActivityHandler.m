@@ -1867,16 +1867,14 @@ const BOOL kSkanRegisterLockWindow = NO;
 
     NSDictionary *thirdPartySharingSettings = [thirdPartySharingResponseData.jsonResponse
                                                objectForKey:@"third_party_sharing"];
-    NSString *error = [thirdPartySharingResponseData.jsonResponse objectForKey:@"error"];
 
-    if (thirdPartySharingSettings == nil && error == nil) {
+    if (thirdPartySharingSettings == nil) {
         // nothing to update
         return;
     }
 
     ADJThirdPartySharingResult *thirdPartySharingResult =
-    [[ADJThirdPartySharingResult alloc] initWithThirdPartySharingSettings:thirdPartySharingSettings
-                                                                    error:error];
+    [[ADJThirdPartySharingResult alloc] initWithThirdPartySharingSettings:thirdPartySharingSettings];
     [selfI updateThirdPartySharingResultI:selfI thirdPartySharingResult:thirdPartySharingResult];
 }
 

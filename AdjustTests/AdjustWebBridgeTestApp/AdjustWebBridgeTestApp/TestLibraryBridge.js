@@ -2,8 +2,8 @@
 //var urlOverwrite = 'http://127.0.0.1:8080';
 //var controlUrl = 'ws://127.0.0.1:1987';
 // device
-var urlOverwrite = 'http://192.168.8.195:8080';
-var controlUrl = 'ws://192.168.8.195:1987';
+var urlOverwrite = 'http://192.168.8.174:8080';
+var controlUrl = 'ws://192.168.8.174:1987';
 
 // local reference of the command executor
 // originally it was this.adjustCommandExecutor of TestLibraryBridge var
@@ -760,7 +760,7 @@ AdjustCommandExecutor.prototype.adidGetterWithTimeout = function(params) {
     });
 };
 
-AdjustCommandExecutor.prototype.tpsSettingsGetterWithTimeout = function(params) {
+AdjustCommandExecutor.prototype.tpsSettingsGetter = function(params) {
     var extraPath = this.extraPath;
     var timeoutS = getFirstValue(params, 'timeout');
     var timeout = parseInt(timeoutS);
@@ -773,15 +773,8 @@ AdjustCommandExecutor.prototype.tpsSettingsGetterWithTimeout = function(params) 
             } else {
                 addInfoToSend('third_party_sharing', 'nil');
             }
-
-            if (result.error != null) {
-                addInfoToSend('error', result.error);
-            } else {
-                addInfoToSend('error', 'nil');
-            }
         } else {
             addInfoToSend('third_party_sharing', 'nil');
-            addInfoToSend('error', 'nil');
         }
 
         addInfoToSend('test_callback_id', testCallbackId);

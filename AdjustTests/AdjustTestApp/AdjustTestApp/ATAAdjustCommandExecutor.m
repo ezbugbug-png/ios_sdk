@@ -988,15 +988,8 @@
             } else {
                 [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
             }
-
-            if (thirdPartySharingResult.error != nil) {
-                [self.testLibrary addInfoToSend:@"error" value:thirdPartySharingResult.error];
-            } else {
-                [self.testLibrary addInfoToSend:@"error" value:@"nil"];
-            }
         } else {
             [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
-            [self.testLibrary addInfoToSend:@"error" value:@"nil"];
         }
         [self.testLibrary addInfoToSend:@"test_callback_id" value:testCallbackId];
         [self.testLibrary sendInfoToServer:self.extraPath];

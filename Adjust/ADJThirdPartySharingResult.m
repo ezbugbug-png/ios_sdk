@@ -10,8 +10,7 @@
 
 @implementation ADJThirdPartySharingResult
 
-- (instancetype)initWithThirdPartySharingSettings:(NSDictionary<NSString *, id> *)thirdPartySharingSettings
-                                            error:(NSString *)error {
+- (instancetype)initWithThirdPartySharingSettings:(NSDictionary<NSString *, id> *)thirdPartySharingSettings {
     self = [super init];
 
     if (self == nil) {
@@ -19,7 +18,6 @@
     }
 
     self.thirdPartySharingSettings = [thirdPartySharingSettings copy];
-    self.error = [error copy];
 
     return self;
 }
@@ -31,7 +29,6 @@
 
     if (copy) {
         copy->_thirdPartySharingSettings = [self.thirdPartySharingSettings copyWithZone:zone];
-        copy->_error = [self.error copyWithZone:zone];
     }
 
     return copy;
@@ -40,8 +37,7 @@
 #pragma mark - NSObject protocol methods
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"settings:%@ error:%@",
-            self.thirdPartySharingSettings, self.error];
+    return [NSString stringWithFormat:@"settings:%@", self.thirdPartySharingSettings];
 }
 
 #pragma mark - NSObject protocol methods
@@ -52,12 +48,8 @@
     if (self.thirdPartySharingSettings != nil) {
         [dictionary setObject:self.thirdPartySharingSettings forKey:@"thirdPartySharingSettings"];
     }
-    if (self.error != nil) {
-        [dictionary setObject:self.error forKey:@"error"];
-    }
 
     return dictionary;
 }
 
 @end
-
