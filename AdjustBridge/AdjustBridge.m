@@ -535,6 +535,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
         || [methodName isEqual:ADJWBGetAdidWithTimeoutMethodName]
         || [methodName isEqual:ADJWBGetAttributionMethodName]
         || [methodName isEqual:ADJWBGetAttributionWithTimeoutMethodName]
+        || [methodName isEqual:ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName]
         || [methodName isEqual:ADJWBIsEnabledMethodName]
         || [methodName isEqual:ADJWBRequestAppTrackingMethodName]
         || [methodName isEqual:ADJWBAppTrackingAuthorizationStatus];
