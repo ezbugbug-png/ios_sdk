@@ -29,8 +29,8 @@
                                            andCommandDelegate:self.adjustCommandExecutor];
     [self.adjustCommandExecutor setTestLibrary:self.testLibrary];
 
-    [self.testLibrary addTestDirectory:@"getters"];
-    // [self.testLibrary doNotExitAfterEnd];
+//    [self.testLibrary addTestDirectory:@"getters"];
+//    [self.testLibrary doNotExitAfterEnd];
     [self startTestSession];
 }
 

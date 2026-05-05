@@ -40,7 +40,7 @@
     return [NSString stringWithFormat:@"settings:%@", self.thirdPartySharingSettings];
 }
 
-#pragma mark - NSObject protocol methods
+#pragma mark - Public methods
 
 - (NSDictionary *)dictionary {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
