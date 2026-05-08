@@ -15,9 +15,11 @@
 - (id)initWithTestLibrary:(ATLTestLibrary *)testLibrary andBasePath:(NSString *)basePath;
 
 - (void)swizzleAttributionCallback:(BOOL)swizzleAttributionCallback
+ thirdPartySharingSettingsCallback:(BOOL)swizzleThirdPartySharingSettingsCallback
             eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
                eventFailedCallback:(BOOL)swizzleEventFailedCallback
           sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
-             sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
+            sessionFailedCallback:(BOOL)swizzleSessionFailedCallback
                       skanCallback:(BOOL)swizzleSkanCallback;
+
 @end

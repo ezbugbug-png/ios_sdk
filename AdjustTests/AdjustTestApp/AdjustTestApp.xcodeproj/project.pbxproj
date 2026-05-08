@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07FFD16D2FADC8C8006C2164 /* ATAAdjustDelegateThirdPartySharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 07FFD16C2FADC8C8006C2164 /* ATAAdjustDelegateThirdPartySharing.m */; };
 		0A584D7D2C3E98CF0071A651 /* AdjustSigSdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A584D7B2C3E98CF0071A651 /* AdjustSigSdk.xcframework */; };
 		0A584D7E2C3E98CF0071A651 /* AdjustSigSdk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A584D7B2C3E98CF0071A651 /* AdjustSigSdk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A584D822C3E994E0071A651 /* libAdjust.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A584D812C3E994E0071A651 /* libAdjust.a */; };
@@ -62,6 +63,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		07FFD16B2FADC8C8006C2164 /* ATAAdjustDelegateThirdPartySharing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ATAAdjustDelegateThirdPartySharing.h; sourceTree = "<group>"; };
+		07FFD16C2FADC8C8006C2164 /* ATAAdjustDelegateThirdPartySharing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ATAAdjustDelegateThirdPartySharing.m; sourceTree = "<group>"; };
 		0A584D7B2C3E98CF0071A651 /* AdjustSigSdk.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:QGUGW9AUMK:adeven GmbH"; lastKnownFileType = wrapper.xcframework; name = AdjustSigSdk.xcframework; path = ../../AdjustSignature/AdjustSigSdk.xcframework; sourceTree = "<group>"; };
 		0A584D812C3E994E0071A651 /* libAdjust.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAdjust.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		524BAC91221C4EE700624F6C /* PSWebSocketDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSWebSocketDriver.m; path = PocketSocket/PSWebSocketDriver.m; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				6FFCFE6A200797D000467F01 /* ATAAdjustDelegateSessionSuccess.m */,
 				9D8EF16C2BD7BC4B0092AB68 /* ATAAdjustDelegateSkan.h */,
 				9D8EF16B2BD7BC4B0092AB68 /* ATAAdjustDelegateSkan.m */,
+				07FFD16B2FADC8C8006C2164 /* ATAAdjustDelegateThirdPartySharing.h */,
+				07FFD16C2FADC8C8006C2164 /* ATAAdjustDelegateThirdPartySharing.m */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				524BACA9221C4EE800624F6C /* PSWebSocketNetworkThread.m in Sources */,
 				6FFCFE71200797D100467F01 /* ATAAdjustDelegateEventSuccess.m in Sources */,
 				6FFCFE6F200797D100467F01 /* ATAAdjustDelegateSessionFailure.m in Sources */,
+				07FFD16D2FADC8C8006C2164 /* ATAAdjustDelegateThirdPartySharing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

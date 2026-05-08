@@ -9,6 +9,7 @@
 #import <AdjustSdk/AdjustSdk.h>
 #import "ATAAdjustDelegate.h"
 #import "ATAAdjustDelegateAttribution.h"
+#import "ATAAdjustDelegateThirdPartySharing.h"
 #import "ATAAdjustDelegateEventFailure.h"
 #import "ATAAdjustDelegateEventSuccess.h"
 #import "ATAAdjustDelegateSessionSuccess.h"
@@ -370,6 +371,13 @@
         self.adjustDelegate =
             [[ATAAdjustDelegateAttribution alloc] initWithTestLibrary:self.testLibrary
                                                           andExtraPath:self.extraPath];
+    }
+
+    if ([parameters objectForKey:@"thirdPartySharingSettingsChangedCallbackSendAll"]) {
+        NSLog(@"thirdPartySharingSettingsChangedCallbackSendAll detected");
+        self.adjustDelegate =
+        [[ATAAdjustDelegateThirdPartySharing alloc] initWithTestLibrary:self.testLibrary
+                                                                 andExtraPath:self.extraPath];
     }
     
     if ([parameters objectForKey:@"sessionCallbackSendSuccess"]) {
@@ -980,11 +988,8 @@
                                completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharingResult) {
         if (thirdPartySharingResult != nil) {
             if (thirdPartySharingResult.thirdPartySharingSettings != nil) {
-                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:thirdPartySharingResult.thirdPartySharingSettings
-                                                                   options:0
-                                                                     error:nil];
-                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                [self.testLibrary addInfoToSend:@"third_party_sharing" value:jsonString];
+                [self.testLibrary addInfoToSend:@"third_party_sharing"
+                                          value:thirdPartySharingResult.thirdPartySharingSettings];
             } else {
                 [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
             }

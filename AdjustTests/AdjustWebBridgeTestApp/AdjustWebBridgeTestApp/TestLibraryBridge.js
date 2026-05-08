@@ -2,8 +2,8 @@
 //var urlOverwrite = 'http://127.0.0.1:8080';
 //var controlUrl = 'ws://127.0.0.1:1987';
 // device
-var urlOverwrite = 'http://192.168.8.174:8080';
-var controlUrl = 'ws://192.168.8.174:1987';
+var urlOverwrite = 'http://192.168.8.176:8080';
+var controlUrl = 'ws://192.168.8.176:1987';
 
 // local reference of the command executor
 // originally it was this.adjustCommandExecutor of TestLibraryBridge var
@@ -372,6 +372,21 @@ AdjustCommandExecutor.prototype.config = function(params) {
                 addInfoToSend('cost_amount', attribution.costAmount);
                 addInfoToSend('cost_currency', attribution.costCurrency);
                 addInfoToSend('json_response', JSON.stringify(attribution.jsonResponse));
+                sendInfoToServer(extraPath);
+            }
+        );
+    }
+
+    if ('thirdPartySharingSettingsChangedCallbackSendAll' in params) {
+        console.log('AdjustCommandExecutor.prototype.config thirdPartySharingSettingsChangedCallbackSendAll');
+        var extraPath = this.extraPath;
+        adjustConfig.setThirdPartySharingSettingsChangedCallback(
+            function(result) {
+                console.log('thirdPartySharingSettingsChangedCallback: ' + JSON.stringify(result));
+                if (result != null && result.thirdPartySharingSettings != null) {
+                    addInfoToSend('third_party_sharing_settings',
+                                  result.thirdPartySharingSettings);
+                }
                 sendInfoToServer(extraPath);
             }
         );
@@ -769,7 +784,7 @@ AdjustCommandExecutor.prototype.tpsSettingsGetter = function(params) {
     Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(result) {
         if (result != null) {
             if (result.thirdPartySharingSettings != null) {
-                addInfoToSend('third_party_sharing', JSON.stringify(result.thirdPartySharingSettings));
+                addInfoToSend('third_party_sharing', result.thirdPartySharingSettings);
             } else {
                 addInfoToSend('third_party_sharing', 'nil');
             }
