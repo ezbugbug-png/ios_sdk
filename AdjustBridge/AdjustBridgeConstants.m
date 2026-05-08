@@ -85,6 +85,7 @@ NSString * const ADJWBStoreAppIdConfigKey = @"storeAppId";
 
 // AdjustWebbridge Callbacks method name
 NSString * const ADJWBAttributionCallbackConfigKey = @"attributionCallback";
+NSString * const ADJWBThirdPartySharingSettingsChangedCallbackConfigKey = @"thirdPartySharingSettingsChangedCallback";
 NSString * const ADJWBEventSuccessCallbackConfigKey = @"eventSuccessCallback";
 NSString * const ADJWBEventFailureCallbackConfigKey = @"eventFailureCallback";
 NSString * const ADJWBSessionSuccessCallbackConfigKey = @"sessionSuccessCallback";

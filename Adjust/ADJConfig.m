@@ -161,6 +161,10 @@
         [self.logger debug:@"Delegate implements adjustAttributionChanged:"];
         hasResponseDelegate = YES;
     }
+    if ([delegate respondsToSelector:@selector(adjustThirdPartySharingSettingsChanged:)]) {
+        [self.logger debug:@"Delegate implements adjustThirdPartySharingSettingsChanged:"];
+        hasResponseDelegate = YES;
+    }
     if ([delegate respondsToSelector:@selector(adjustEventTrackingSucceeded:)]) {
         [self.logger debug:@"Delegate implements adjustEventTrackingSucceeded:"];
         hasResponseDelegate = YES;

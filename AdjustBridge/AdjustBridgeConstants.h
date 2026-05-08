@@ -83,6 +83,7 @@ FOUNDATION_EXPORT NSString * const ADJWBStoreNameConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBStoreAppIdConfigKey;
 
 FOUNDATION_EXPORT NSString * const ADJWBAttributionCallbackConfigKey;
+FOUNDATION_EXPORT NSString * const ADJWBThirdPartySharingSettingsChangedCallbackConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBEventSuccessCallbackConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBEventFailureCallbackConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBSessionSuccessCallbackConfigKey;

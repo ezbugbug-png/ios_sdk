@@ -429,6 +429,7 @@ static NSString * fbAppIdStatic = nil;
 
             //config callbacks
             this.attributionCallback = null;
+            this.thirdPartySharingSettingsChangedCallback = null;
             this.eventSuccessCallback = null;
             this.eventFailureCallback = null;
             this.sessionSuccessCallback = null;
@@ -531,6 +532,12 @@ static NSString * fbAppIdStatic = nil;
             const callbackId = window.randomCallbackIdWithPrefix("adjust_attributionCallback");
             Adjust._handleCallbackFromObjC(attributionCallback, callbackId);
             this.attributionCallback = callbackId;
+        };
+
+        AdjustConfig.prototype.setThirdPartySharingSettingsChangedCallback = function(thirdPartySharingSettingsChangedCallback) {
+            const callbackId = window.randomCallbackIdWithPrefix("adjust_thirdPartySharingSettingsChangedCallback");
+            Adjust._handleCallbackFromObjC(thirdPartySharingSettingsChangedCallback, callbackId);
+            this.thirdPartySharingSettingsChangedCallback = callbackId;
         };
 
         AdjustConfig.prototype.setEventSuccessCallback = function(eventSuccessCallback) {

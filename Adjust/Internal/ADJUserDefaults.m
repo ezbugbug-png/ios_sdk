@@ -197,8 +197,8 @@ static NSString * const PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS = @"adj_third_par
 }
 
 + (ADJThirdPartySharingResult *)getThirdPartySharingResult {
-    NSDictionary *thirdPartySharingSettings = [[NSUserDefaults standardUserDefaults]
-                                               dictionaryForKey:PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS];
+    NSString *thirdPartySharingSettings = [[NSUserDefaults standardUserDefaults]
+                                           stringForKey:PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS];
 
     if (thirdPartySharingSettings == nil) {
         return nil;

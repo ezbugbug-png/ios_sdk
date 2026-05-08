@@ -16,6 +16,7 @@
 @class ADJSessionFailure;
 @class ADJStoreInfo;
 @class ADJRemoteTrigger;
+@class ADJThirdPartySharingResult;
 typedef NS_ENUM(NSUInteger, ADJLogLevel);
 
 #pragma mark - AdjustDelegate methods
@@ -35,6 +36,15 @@ typedef NS_ENUM(NSUInteger, ADJLogLevel);
  * @note See ADJAttribution for details.
  */
 - (void)adjustAttributionChanged:(nullable ADJAttribution *)attribution;
+
+/**
+ * @brief Optional delegate method that gets called when the third party sharing settings changed.
+ *
+ * @param thirdPartySharingResult The third party sharing settings information.
+ *
+ * @note See ADJThirdPartySharingResult for details.
+ */
+- (void)adjustThirdPartySharingSettingsChanged:(nullable ADJThirdPartySharingResult *)thirdPartySharingResult;
 
 /**
  * @brief Optional delegate method that gets called when an event is tracked with success.

@@ -1868,14 +1868,30 @@ const BOOL kSkanRegisterLockWindow = NO;
     NSDictionary *thirdPartySharingSettings = [thirdPartySharingResponseData.jsonResponse
                                                objectForKey:@"third_party_sharing"];
 
-    if (thirdPartySharingSettings == nil) {
+    if (thirdPartySharingSettings == nil || ![thirdPartySharingSettings isKindOfClass:[NSDictionary class]]) {
         // nothing to update
         return;
     }
 
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:thirdPartySharingSettings
+                                                       options:0
+                                                         error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    if (jsonString == nil) {
+        return;
+    }
+
     ADJThirdPartySharingResult *thirdPartySharingResult =
-    [[ADJThirdPartySharingResult alloc] initWithThirdPartySharingSettings:thirdPartySharingSettings];
-    [selfI updateThirdPartySharingResultI:selfI thirdPartySharingResult:thirdPartySharingResult];
+    [[ADJThirdPartySharingResult alloc] initWithThirdPartySharingSettings:jsonString];
+    BOOL toLaunchThirdPartySharingSettingsChangedDelegate =
+        [selfI updateThirdPartySharingResultI:selfI thirdPartySharingResult:thirdPartySharingResult];
+
+    if (toLaunchThirdPartySharingSettingsChangedDelegate) {
+        [selfI.logger debug:@"Launching third party sharing settings changed delegate"];
+        [ADJUtil launchInMainThread:selfI.adjustDelegate
+                           selector:@selector(adjustThirdPartySharingSettingsChanged:)
+                         withObject:thirdPartySharingResult];
+    }
 }
 
 - (void)launchPurchaseVerificationResponseTasksI:(ADJActivityHandler *)selfI
@@ -2101,17 +2117,32 @@ const BOOL kSkanRegisterLockWindow = NO;
     }
 }
 
-- (void)updateThirdPartySharingResultI:(ADJActivityHandler *)selfI
+- (BOOL)updateThirdPartySharingResultI:(ADJActivityHandler *)selfI
                thirdPartySharingResult:(ADJThirdPartySharingResult *)thirdPartySharingResult {
     if (thirdPartySharingResult == nil) {
-        return;
+        return NO;
+    }
+
+    if ([thirdPartySharingResult isEqual:selfI.thirdPartySharingResult]) {
+        return NO;
     }
 
     // copy third party sharing result property
     // to avoid using the same object for the callback
     selfI.thirdPartySharingResult = [thirdPartySharingResult copy];
     [ADJUserDefaults saveThirdPartySharingResult:selfI.thirdPartySharingResult];
+
     [selfI processCachedThirdPartySharingReadCallbackI:selfI];
+
+    if (selfI.adjustDelegate == nil) {
+        return NO;
+    }
+
+    if (![selfI.adjustDelegate respondsToSelector:@selector(adjustThirdPartySharingSettingsChanged:)]) {
+        return NO;
+    }
+
+    return YES;
 }
 
 - (void)processCachedThirdPartySharingReadCallbackI:(ADJActivityHandler *)selfI {

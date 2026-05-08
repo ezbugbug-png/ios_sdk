@@ -10,7 +10,7 @@
 
 @implementation ADJThirdPartySharingResult
 
-- (instancetype)initWithThirdPartySharingSettings:(NSDictionary<NSString *, id> *)thirdPartySharingSettings {
+- (instancetype)initWithThirdPartySharingSettings:(NSString *)thirdPartySharingSettings {
     self = [super init];
 
     if (self == nil) {
@@ -22,25 +22,17 @@
     return self;
 }
 
-#pragma mark - NSCopying protocol methods
-
-- (id)copyWithZone:(NSZone *)zone {
-    ADJThirdPartySharingResult *copy = [[[self class] allocWithZone:zone] init];
-
-    if (copy) {
-        copy->_thirdPartySharingSettings = [self.thirdPartySharingSettings copyWithZone:zone];
+- (BOOL)isEqualToThirdPartySharingResult:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    if (thirdPartySharingResult == nil) {
+        return NO;
     }
 
-    return copy;
+    if (self.thirdPartySharingSettings == thirdPartySharingResult.thirdPartySharingSettings) {
+        return YES;
+    }
+
+    return [self.thirdPartySharingSettings isEqualToString:thirdPartySharingResult.thirdPartySharingSettings];
 }
-
-#pragma mark - NSObject protocol methods
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"settings:%@", self.thirdPartySharingSettings];
-}
-
-#pragma mark - Public methods
 
 - (NSDictionary *)dictionary {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
@@ -50,6 +42,40 @@
     }
 
     return dictionary;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"settings:%@", self.thirdPartySharingSettings];
+}
+
+#pragma mark - NSObject protocol methods
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+
+    if (![object isKindOfClass:[ADJThirdPartySharingResult class]]) {
+        return NO;
+    }
+
+    return [self isEqualToThirdPartySharingResult:(ADJThirdPartySharingResult *)object];
+}
+
+- (NSUInteger)hash {
+    return [self.thirdPartySharingSettings hash];
+}
+
+#pragma mark - NSCopying protocol methods
+
+- (id)copyWithZone:(NSZone *)zone {
+    ADJThirdPartySharingResult *copy = [[[self class] allocWithZone:zone] init];
+
+    if (copy) {
+        copy.thirdPartySharingSettings = [self.thirdPartySharingSettings copyWithZone:zone];
+    }
+
+    return copy;
 }
 
 @end

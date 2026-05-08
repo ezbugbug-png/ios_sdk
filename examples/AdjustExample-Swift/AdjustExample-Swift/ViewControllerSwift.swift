@@ -79,7 +79,11 @@ class ViewControllerSwift: UIViewController {
     }
 
     @IBAction func btnDisableSDKTapped(_sender: UIButton) {
-        Adjust.disable()
+//        Adjust.disable()
+
+        Adjust.thirdPartySharingSettings(withTimeout: 30) { result in
+            NSLog(result!.thirdPartySharingSettings)
+        }
     }
 
     @IBAction func btnIsSDKEnabledTapped(_sender: UIButton) {
