@@ -10,14 +10,14 @@
 
 @implementation ADJThirdPartySharingResult
 
-- (instancetype)initWithThirdPartySharingSettings:(NSString *)thirdPartySharingSettings {
+- (instancetype)initWithThirdPartySharingSettings:(NSString *)thirdPartySharingSettingsJson {
     self = [super init];
 
     if (self == nil) {
         return nil;
     }
 
-    self.thirdPartySharingSettings = [thirdPartySharingSettings copy];
+    self.thirdPartySharingSettingsJson = [thirdPartySharingSettingsJson copy];
 
     return self;
 }
@@ -27,25 +27,25 @@
         return NO;
     }
 
-    if (self.thirdPartySharingSettings == thirdPartySharingResult.thirdPartySharingSettings) {
+    if (self.thirdPartySharingSettingsJson == thirdPartySharingResult.thirdPartySharingSettingsJson) {
         return YES;
     }
 
-    return [self.thirdPartySharingSettings isEqualToString:thirdPartySharingResult.thirdPartySharingSettings];
+    return [self.thirdPartySharingSettingsJson isEqualToString:thirdPartySharingResult.thirdPartySharingSettingsJson];
 }
 
 - (NSDictionary *)dictionary {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
 
-    if (self.thirdPartySharingSettings != nil) {
-        [dictionary setObject:self.thirdPartySharingSettings forKey:@"thirdPartySharingSettings"];
+    if (self.thirdPartySharingSettingsJson != nil) {
+        [dictionary setObject:self.thirdPartySharingSettingsJson forKey:@"thirdPartySharingSettings"];
     }
 
     return dictionary;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"settings:%@", self.thirdPartySharingSettings];
+    return [NSString stringWithFormat:@"settings:%@", self.thirdPartySharingSettingsJson];
 }
 
 #pragma mark - NSObject protocol methods
@@ -63,7 +63,7 @@
 }
 
 - (NSUInteger)hash {
-    return [self.thirdPartySharingSettings hash];
+    return [self.thirdPartySharingSettingsJson hash];
 }
 
 #pragma mark - NSCopying protocol methods
@@ -72,7 +72,7 @@
     ADJThirdPartySharingResult *copy = [[[self class] allocWithZone:zone] init];
 
     if (copy) {
-        copy.thirdPartySharingSettings = [self.thirdPartySharingSettings copyWithZone:zone];
+        copy.thirdPartySharingSettingsJson = [self.thirdPartySharingSettingsJson copyWithZone:zone];
     }
 
     return copy;

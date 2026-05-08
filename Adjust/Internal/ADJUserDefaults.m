@@ -192,7 +192,7 @@ static NSString * const PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS = @"adj_third_par
 }
 
 + (void)saveThirdPartySharingResult:(ADJThirdPartySharingResult *)thirdPartySharingResult {
-    [[NSUserDefaults standardUserDefaults] setObject:thirdPartySharingResult.thirdPartySharingSettings
+    [[NSUserDefaults standardUserDefaults] setObject:thirdPartySharingResult.thirdPartySharingSettingsJson
                                               forKey:PREFS_KEY_THIRD_PARTY_SHARING_SETTINGS];
 }
 

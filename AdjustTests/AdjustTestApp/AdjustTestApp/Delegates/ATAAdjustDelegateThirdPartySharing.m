@@ -34,7 +34,7 @@
     NSLog(@"Third party sharing settings changed callback called!");
     NSLog(@"Third party sharing settings: %@", thirdPartySharingResult);
 
-    NSString *thirdPartySharingSettings = thirdPartySharingResult.thirdPartySharingSettings;
+    NSString *thirdPartySharingSettings = thirdPartySharingResult.thirdPartySharingSettingsJson;
     if (thirdPartySharingSettings != nil) {
         [self.testLibrary addInfoToSend:@"third_party_sharing_settings" value:thirdPartySharingSettings];
     }

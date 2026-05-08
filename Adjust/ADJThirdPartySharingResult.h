@@ -13,7 +13,7 @@
 /**
  * @brief Third party sharing settings returned by the backend.
  */
-@property (nonatomic, copy, nonnull) NSString *thirdPartySharingSettings;
+@property (nonatomic, copy, nonnull) NSString *thirdPartySharingSettingsJson;
 
 /**
  * @brief Create third party sharing result object.
@@ -22,7 +22,7 @@
  *
  * @return Adjust third party sharing result object.
  */
-- (nonnull instancetype)initWithThirdPartySharingSettings:(nonnull NSString *)thirdPartySharingSettings;
+- (nonnull instancetype)initWithThirdPartySharingSettings:(nonnull NSString *)thirdPartySharingSettingsJson;
 
 /**
  * @brief Check if given third party sharing result equals current one.

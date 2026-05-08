@@ -987,9 +987,9 @@
     [Adjust thirdPartySharingSettingsWithTimeout:timeout
                                completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharingResult) {
         if (thirdPartySharingResult != nil) {
-            if (thirdPartySharingResult.thirdPartySharingSettings != nil) {
+            if (thirdPartySharingResult.thirdPartySharingSettingsJson != nil) {
                 [self.testLibrary addInfoToSend:@"third_party_sharing"
-                                          value:thirdPartySharingResult.thirdPartySharingSettings];
+                                          value:thirdPartySharingResult.thirdPartySharingSettingsJson];
             } else {
                 [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
             }
