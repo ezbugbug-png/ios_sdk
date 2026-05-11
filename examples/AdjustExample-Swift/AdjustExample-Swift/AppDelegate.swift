@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AdjustDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        NSLog("Scheme based deep link opened an app: %@", url.absoluteString)
+        print("Scheme based deep link opened an app: \(url.absoluteString)")
         // add your code below to handle deep link
         // (e.g., open deep link content)
         // url object contains the deep link
@@ -55,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AdjustDelegate {
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if (userActivity.activityType == NSUserActivityTypeBrowsingWeb) {
-            NSLog("Universal link opened an app: %@", userActivity.webpageURL!.absoluteString)
+            print("Universal link opened an app: \(userActivity.webpageURL!.absoluteString)")
             // Pass deep link to Adjust in order to potentially reattribute user.
             Adjust.processDeeplink(ADJDeeplink(deeplink: userActivity.webpageURL!)!)
         }
@@ -63,38 +63,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AdjustDelegate {
     }
 
     func adjustAttributionChanged(_ attribution: ADJAttribution?) {
-        NSLog("Attribution callback called!")
-        NSLog("Attribution: %@", attribution ?? "")
+        print("Attribution callback called!")
+        print("Attribution: \(String(describing: attribution))")
     }
 
     func adjustThirdPartySharingSettingsChanged(_ thirdPartySharingResult: ADJThirdPartySharingResult?) {
-        NSLog("Third Party sharing callback called!")
-        NSLog("third party sharing: %@", thirdPartySharingResult?.thirdPartySharingSettingsJson ?? "")
+        print("Third Party sharing callback called!")
+        print("Third party sharing: \(thirdPartySharingResult?.thirdPartySharingSettingsJson ?? "")")
     }
 
     func adjustEventTrackingSucceeded(_ eventSuccessResponseData: ADJEventSuccess?) {
-        NSLog("Event success callback called!")
-        NSLog("Event success data: %@", eventSuccessResponseData ?? "")
+        print("Event success callback called!")
+        print("Event success data: \(String(describing: eventSuccessResponseData))")
     }
 
     func adjustEventTrackingFailed(_ eventFailureResponseData: ADJEventFailure?) {
-        NSLog("Event failure callback called!")
-        NSLog("Event failure data: %@", eventFailureResponseData ?? "")
+        print("Event failure callback called!")
+        print("Event failure data: \(String(describing: eventFailureResponseData))")
     }
 
     func adjustSessionTrackingSucceeded(_ sessionSuccessResponseData: ADJSessionSuccess?) {
-        NSLog("Session success callback called!")
-        NSLog("Session success data: %@", sessionSuccessResponseData ?? "")
+        print("Session success callback called!")
+        print("Session success data: \(String(describing: sessionSuccessResponseData))")
     }
 
     func adjustSessionTrackingFailed(_ sessionFailureResponseData: ADJSessionFailure?) {
-        NSLog("Session failure callback called!");
-        NSLog("Session failure data: %@", sessionFailureResponseData ?? "")
+        print("Session failure callback called!")
+        print("Session failure data: \(String(describing: sessionFailureResponseData))")
     }
 
     func adjustDeferredDeeplinkReceived(_ deeplink: URL?) -> Bool {
-        NSLog("Deferred deep link callback called!")
-        NSLog("Deferred deep link URL: %@", deeplink?.absoluteString ?? "")
+        print("Deferred deep link callback called!")
+        print("Deferred deep link URL: \(deeplink?.absoluteString ?? "")")
         return true
     }
 
