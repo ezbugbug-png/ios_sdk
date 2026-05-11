@@ -381,11 +381,10 @@ AdjustCommandExecutor.prototype.config = function(params) {
         console.log('AdjustCommandExecutor.prototype.config thirdPartySharingSettingsChangedCallbackSendAll');
         var extraPath = this.extraPath;
         adjustConfig.setThirdPartySharingSettingsChangedCallback(
-            function(result) {
-                console.log('thirdPartySharingSettingsChangedCallback: ' + JSON.stringify(result));
-                if (result != null && result.thirdPartySharingSettings != null) {
-                    addInfoToSend('third_party_sharing_settings',
-                                  result.thirdPartySharingSettings);
+            function(thirdPartySharingSettings) {
+                console.log('thirdPartySharingSettingsChangedCallback: ' + JSON.stringify(thirdPartySharingSettings));
+                if (thirdPartySharingSettings != null) {
+                    addInfoToSend('third_party_sharing_settings', thirdPartySharingSettings);
                 }
                 sendInfoToServer(extraPath);
             }
@@ -781,13 +780,9 @@ AdjustCommandExecutor.prototype.tpsSettingsGetter = function(params) {
     var timeout = parseInt(timeoutS);
     var testCallbackId = getFirstValue(params, 'testCallbackId');
 
-    Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(result) {
-        if (result != null) {
-            if (result.thirdPartySharingSettings != null) {
-                addInfoToSend('third_party_sharing', result.thirdPartySharingSettings);
-            } else {
-                addInfoToSend('third_party_sharing', 'nil');
-            }
+    Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(thirdPartySharingSettings) {
+        if (thirdPartySharingSettings != null) {
+            addInfoToSend('third_party_sharing', thirdPartySharingSettings);
         } else {
             addInfoToSend('third_party_sharing', 'nil');
         }

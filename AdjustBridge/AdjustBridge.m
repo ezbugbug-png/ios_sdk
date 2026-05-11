@@ -155,8 +155,8 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
         }];
     } else if ([methodName isEqual:ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName]) {
         NSNumber *timeoutMs = [parameters objectForKey:@"timeoutMs"];
-        [Adjust thirdPartySharingSettingsWithTimeout:[timeoutMs integerValue] completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharing) {
-            [self execJsCallbackWithId:callbackId callbackData:[thirdPartySharing dictionary]];
+        [Adjust thirdPartySharingSettingsWithTimeout:[timeoutMs integerValue] completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharingResult) {
+            [self execJsCallbackWithId:callbackId callbackData:thirdPartySharingResult.thirdPartySharingSettingsJson];
         }];
     } else if ([methodName isEqual:ADJWBIsEnabledMethodName]) {
         [Adjust isEnabledWithCompletionHandler:^(BOOL isEnabled) {
@@ -616,7 +616,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
     }
 
     [self execJsCallbackWithId:self.thirdPartySharingSettingsChangedCallbackName
-                  callbackData:[thirdPartySharingResult dictionary]];
+                  callbackData:thirdPartySharingResult.thirdPartySharingSettingsJson];
 }
 
 - (void)adjustEventTrackingSucceeded:(ADJEventSuccess *)eventSuccessResponseData {

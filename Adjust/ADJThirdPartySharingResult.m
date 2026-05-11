@@ -34,18 +34,8 @@
     return [self.thirdPartySharingSettingsJson isEqualToString:thirdPartySharingResult.thirdPartySharingSettingsJson];
 }
 
-- (NSDictionary *)dictionary {
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-
-    if (self.thirdPartySharingSettingsJson != nil) {
-        [dictionary setObject:self.thirdPartySharingSettingsJson forKey:@"thirdPartySharingSettings"];
-    }
-
-    return dictionary;
-}
-
 - (NSString *)description {
-    return [NSString stringWithFormat:@"settings:%@", self.thirdPartySharingSettingsJson];
+    return [NSString stringWithFormat:@"thirdPartySharingSettings:%@", self.thirdPartySharingSettingsJson];
 }
 
 #pragma mark - NSObject protocol methods
