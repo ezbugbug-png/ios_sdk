@@ -29,8 +29,7 @@
                                            andCommandDelegate:self.adjustCommandExecutor];
     [self.adjustCommandExecutor setTestLibrary:self.testLibrary];
 
-    [self.testLibrary addTestDirectory:@"third-party-sharing-callback"];
-    [self.testLibrary addTestDirectory:@"getters"];
+//    [self.testLibrary addTestDirectory:@"getters"];
 //    [self.testLibrary doNotExitAfterEnd];
     [self startTestSession];
 }
