@@ -67,6 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AdjustDelegate {
         NSLog("Attribution: %@", attribution ?? "")
     }
 
+    func adjustThirdPartySharingSettingsChanged(_ thirdPartySharingResult: ADJThirdPartySharingResult?) {
+        NSLog("Third Party sharing callback called!")
+        NSLog("third party sharing: %@", thirdPartySharingResult?.thirdPartySharingSettingsJson ?? "")
+    }
+
     func adjustEventTrackingSucceeded(_ eventSuccessResponseData: ADJEventSuccess?) {
         NSLog("Event success callback called!")
         NSLog("Event success data: %@", eventSuccessResponseData ?? "")

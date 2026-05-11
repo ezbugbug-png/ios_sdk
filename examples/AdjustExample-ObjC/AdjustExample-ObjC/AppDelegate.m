@@ -72,6 +72,11 @@
     NSLog(@"Attribution: %@", attribution);
 }
 
+- (void)adjustThirdPartySharingSettingsChanged:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    NSLog(@"Third Party sharing callback called!");
+    NSLog(@"third party sharing: %@", thirdPartySharingResult.thirdPartySharingSettingsJson);
+}
+
 - (void)adjustEventTrackingSucceeded:(ADJEventSuccess *)eventSuccessResponseData {
     NSLog(@"Event success callback called!");
     NSLog(@"Event success data: %@", eventSuccessResponseData);
