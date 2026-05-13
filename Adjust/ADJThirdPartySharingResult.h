@@ -18,7 +18,7 @@
 /**
  * @brief Create third party sharing result object.
  *
- * @param thirdPartySharingSettings JSON string holding third party sharing settings.
+ * @param thirdPartySharingSettingsJson JSON string holding third party sharing settings.
  *
  * @return Adjust third party sharing result object.
  */

@@ -866,7 +866,7 @@ const BOOL kSkanRegisterLockWindow = NO;
                 timeoutCallback.timeoutBlock = nil;
             }];
         } else {
-            // we should sync the addObject call below, becasue this array is accessed and altered
+            // we should sync the addObject call below, because this array is accessed and altered
             // from ActivityHandler's internal queue and from the main queue (where timeout block is scheduled to run).
             @synchronized (selfI.savedPreLaunch.cachedAttributionTimeoutCallbacksArray) {
                 [selfI.savedPreLaunch.cachedAttributionTimeoutCallbacksArray addObject:timeoutCallback];
@@ -910,7 +910,7 @@ const BOOL kSkanRegisterLockWindow = NO;
                 timeoutCallback.timeoutBlock = nil;
             }];
         } else {
-            // we should sync the addObject call below, becasue this array is accessed and altered
+            // we should sync the addObject call below, because this array is accessed and altered
             // from ActivityHandler's internal queue and from the main queue (where timeout block is scheduled to run).
             @synchronized (selfI.savedPreLaunch.cachedAdidTimeoutCallbacksArray) {
                 [selfI.savedPreLaunch.cachedAdidTimeoutCallbacksArray addObject:timeoutCallback];
@@ -937,7 +937,7 @@ const BOOL kSkanRegisterLockWindow = NO;
                 timeoutCallback.timeoutBlock = nil;
             }];
         } else {
-            // we should sync the addObject call below, becasue this array is accessed and altered
+            // we should sync the addObject call below, because this array is accessed and altered
             // from ActivityHandler's internal queue and from the main queue (where timeout block is scheduled to run).
             @synchronized (selfI.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray) {
                 [selfI.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray addObject:timeoutCallback];

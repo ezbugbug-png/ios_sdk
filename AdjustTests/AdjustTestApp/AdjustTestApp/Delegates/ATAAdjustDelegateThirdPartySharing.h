@@ -1,5 +1,5 @@
 //
-//  ATAAdjustDelegateThirdPartySharingResult.h
+//  ATAAdjustDelegateThirdPartySharing.h
 //  AdjustTestApp
 //
 //  Created by Aditi Agrawal on 08.05.26.

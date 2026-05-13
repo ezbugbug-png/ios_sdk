@@ -1,5 +1,5 @@
 //
-//  ATAAdjustDelegateThirdPartySharingResult.m
+//  ATAAdjustDelegateThirdPartySharing.m
 //  AdjustTestApp
 //
 //  Created by Aditi Agrawal on 08.05.26.
