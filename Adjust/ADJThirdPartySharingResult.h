@@ -33,4 +33,11 @@
  */
 - (BOOL)isEqualToThirdPartySharingResult:(nonnull ADJThirdPartySharingResult *)thirdPartySharingResult;
 
+/**
+ * @brief Get third party sharing result value as dictionary.
+ *
+ * @return Dictionary containing third party sharing result as key-value pairs.
+ */
+- (nullable NSDictionary *)dictionary;
+
 @end

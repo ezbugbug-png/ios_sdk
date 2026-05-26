@@ -68,4 +68,14 @@
     return copy;
 }
 
+- (NSDictionary *)dictionary {
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+
+    if (self.thirdPartySharingSettingsJson != nil) {
+        [dictionary setObject:self.thirdPartySharingSettingsJson forKey:@"thirdPartySharingSettingsJson"];
+    }
+
+    return dictionary;
+}
+
 @end

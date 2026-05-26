@@ -2,8 +2,8 @@
 //var urlOverwrite = 'http://127.0.0.1:8080';
 //var controlUrl = 'ws://127.0.0.1:1987';
 // device
-var urlOverwrite = 'http://192.168.8.176:8080';
-var controlUrl = 'ws://192.168.8.176:1987';
+var urlOverwrite = 'http://192.168.8.179:8080';
+var controlUrl = 'ws://192.168.8.179:1987';
 
 // local reference of the command executor
 // originally it was this.adjustCommandExecutor of TestLibraryBridge var
@@ -381,10 +381,12 @@ AdjustCommandExecutor.prototype.config = function(params) {
         console.log('AdjustCommandExecutor.prototype.config thirdPartySharingSettingsChangedCallbackSendAll');
         var extraPath = this.extraPath;
         adjustConfig.setThirdPartySharingSettingsChangedCallback(
-            function(thirdPartySharingSettings) {
-                console.log('thirdPartySharingSettingsChangedCallback: ' + JSON.stringify(thirdPartySharingSettings));
-                if (thirdPartySharingSettings != null) {
-                    addInfoToSend('third_party_sharing_settings', thirdPartySharingSettings);
+            function(result) {
+                console.log('thirdPartySharingSettingsChangedCallback: ' + JSON.stringify(result));
+                if (result != null) {
+                    addInfoToSend('third_party_sharing_settings', result.thirdPartySharingSettingsJson);
+                } else {
+                    addInfoToSend('third_party_sharing_settings', null);
                 }
                 sendInfoToServer(extraPath);
             }
@@ -780,9 +782,9 @@ AdjustCommandExecutor.prototype.tpsSettingsGetter = function(params) {
     var timeout = parseInt(timeoutS);
     var testCallbackId = getFirstValue(params, 'testCallbackId');
 
-    Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(thirdPartySharingSettings) {
-        if (thirdPartySharingSettings != null) {
-            addInfoToSend('third_party_sharing', thirdPartySharingSettings);
+    Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(result) {
+        if (result != null && result.thirdPartySharingSettingsJson != null) {
+            addInfoToSend('third_party_sharing', result.thirdPartySharingSettingsJson);
         } else {
             addInfoToSend('third_party_sharing', 'nil');
         }
