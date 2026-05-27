@@ -239,6 +239,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
     NSNumber *isAdServicesEnabled = [parameters objectForKey:ADJWBAllowAdServicesInfoReadingConfigKey];
     NSNumber *isIdfaReadingAllowed = [parameters objectForKey:ADJWBIsIdfaReadingAllowedConfigKey];
     NSNumber *isIdfvReadingAllowed = [parameters objectForKey:ADJWBIsIdfvReadingAllowedConfigKey];
+    NSNumber *isFbIdReadingEnabled = [parameters objectForKey:ADJWBIsFbIdReadingEnabledConfigKey];
     NSNumber *isSkanAttributionHandlingEnabled = [parameters objectForKey:ADJWBIsSkanAttributionHandlingEnabledConfigKey];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [parameters objectForKey:ADJWBIsDeferredDeeplinkOpeningEnabledConfigKey];
     NSNumber *isCoppaComplianceEnabled = [parameters objectForKey:ADJWBIsCoppaComplianceEnabledConfigKey];
@@ -333,6 +334,12 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
     if ([AdjustBridgeUtil isFieldValid:isIdfvReadingAllowed]) {
         if ([isIdfvReadingAllowed boolValue] == NO) {
             [adjustConfig disableIdfvReading];
+        }
+    }
+
+    if ([AdjustBridgeUtil isFieldValid:isFbIdReadingEnabled]) {
+        if ([isFbIdReadingEnabled boolValue] == NO) {
+            [adjustConfig disableFbIdReading];
         }
     }
 

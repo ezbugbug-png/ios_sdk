@@ -1084,7 +1084,10 @@ const BOOL kSkanRegisterLockWindow = NO;
     kForegroundTimerInterval = ADJAdjustFactory.timerInterval;
     kBackgroundTimerInterval = ADJAdjustFactory.timerInterval;
 
-    selfI.packageParams = [ADJPackageParams packageParamsWithSdkPrefix:selfI.adjustConfig.sdkPrefix];
+    BOOL canReadFbId = selfI.adjustConfig.isFbIdReadingEnabled
+        && !selfI.adjustConfig.isCoppaComplianceEnabled;
+    selfI.packageParams = [ADJPackageParams packageParamsWithSdkPrefix:selfI.adjustConfig.sdkPrefix
+                                                    fbIdReadingEnabled:canReadFbId];
 
     // read files that are accessed only in Internal sections
     selfI.globalParameters = [[ADJGlobalParameters alloc] init];

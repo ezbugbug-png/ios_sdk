@@ -26,6 +26,11 @@
 
 - (id)initWithSdkPrefix:(NSString *)sdkPrefix;
 
+- (id)initWithSdkPrefix:(NSString *)sdkPrefix fbIdReadingEnabled:(BOOL)fbIdReadingEnabled;
+
 + (ADJPackageParams *)packageParamsWithSdkPrefix:(NSString *)sdkPrefix;
+
++ (ADJPackageParams *)packageParamsWithSdkPrefix:(NSString *)sdkPrefix
+                              fbIdReadingEnabled:(BOOL)fbIdReadingEnabled;
 
 @end

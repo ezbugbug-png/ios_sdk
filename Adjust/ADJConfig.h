@@ -165,6 +165,13 @@ typedef NS_ENUM(NSUInteger, ADJLogLevel);
 @property (nonatomic, readonly) BOOL isIdfvReadingEnabled;
 
 /**
+ * @brief Indicator of whether reading of FB ID is enabled or not.
+ *
+ * @note It is enabled by default.
+ */
+@property (nonatomic, readonly) BOOL isFbIdReadingEnabled;
+
+/**
  * @brief Indicator of whether SKAdNetwork (SKAN) attribution is enabled or not.
  *
  * @note It is enabled by default.
@@ -345,6 +352,11 @@ typedef NS_ENUM(NSUInteger, ADJLogLevel);
  * @brief A method for disabling the reading of IDFV parameter.
  */
 - (void)disableIdfvReading;
+
+/**
+ * @brief A method for disabling the reading of the FB ID.
+ */
+- (void)disableFbIdReading;
 
 /**
  * @brief A method for disabling SKAdNetwork (SKAN) attribution.

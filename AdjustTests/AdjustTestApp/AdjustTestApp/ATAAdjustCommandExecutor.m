@@ -312,6 +312,13 @@
         }
     }
 
+    if ([parameters objectForKey:@"fbIdReadingEnabled"]) {
+        NSString *fbIdReadingEnabledS = [parameters objectForKey:@"fbIdReadingEnabled"][0];
+        if ([fbIdReadingEnabledS boolValue] == NO) {
+            [adjustConfig disableFbIdReading];
+        }
+    }
+
     if ([parameters objectForKey:@"allowAdServicesInfoReading"]) {
         NSString *allowAdServicesInfoReadingS = [parameters objectForKey:@"allowAdServicesInfoReading"][0];
         if ([allowAdServicesInfoReadingS boolValue] == NO) {

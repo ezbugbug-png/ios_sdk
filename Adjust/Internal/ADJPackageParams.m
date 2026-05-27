@@ -17,7 +17,16 @@
     return [[ADJPackageParams alloc] initWithSdkPrefix:sdkPrefix];
 }
 
++ (ADJPackageParams *)packageParamsWithSdkPrefix:(NSString *)sdkPrefix
+                              fbIdReadingEnabled:(BOOL)fbIdReadingEnabled {
+    return [[ADJPackageParams alloc] initWithSdkPrefix:sdkPrefix fbIdReadingEnabled:fbIdReadingEnabled];
+}
+
 - (id)initWithSdkPrefix:(NSString *)sdkPrefix {
+    return [self initWithSdkPrefix:sdkPrefix fbIdReadingEnabled:YES];
+}
+
+- (id)initWithSdkPrefix:(NSString *)sdkPrefix fbIdReadingEnabled:(BOOL)fbIdReadingEnabled {
     self = [super init];
     if (self == nil) {
         return nil;
@@ -25,7 +34,9 @@
 
     self.osName = @"ios";
     self.idfv = [ADJUtil idfv];
-    self.fbAnonymousId = [ADJUtil fbAnonymousId];
+    if (fbIdReadingEnabled == YES) {
+        self.fbAnonymousId = [ADJUtil fbAnonymousId];
+    }
     self.bundleIdentifier = [ADJUtil bundleIdentifier];
     self.buildNumber = [ADJUtil buildNumber];
     self.versionNumber = [ADJUtil versionNumber];
