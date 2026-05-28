@@ -49,6 +49,7 @@ FOUNDATION_EXPORT NSString * const ADJWBGetAdidMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBGetAttributionMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBGetAdidWithTimeoutMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBGetAttributionWithTimeoutMethodName;
+FOUNDATION_EXPORT NSString * const ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName;
 FOUNDATION_EXPORT NSString * const ADJWBAppTrackingAuthorizationStatus;
 
 FOUNDATION_EXPORT NSString * const ADJWBAppTokenConfigKey;
@@ -63,6 +64,7 @@ FOUNDATION_EXPORT NSString * const ADJWBNeedsCostConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBAllowAdServicesInfoReadingConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBIsIdfaReadingAllowedConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBIsIdfvReadingAllowedConfigKey;
+FOUNDATION_EXPORT NSString * const ADJWBIsFbIdReadingEnabledConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBIsSkanAttributionHandlingEnabledConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBIsDeferredDeeplinkOpeningEnabledConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBIsCoppaComplianceEnabledConfigKey;
@@ -82,6 +84,7 @@ FOUNDATION_EXPORT NSString * const ADJWBStoreNameConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBStoreAppIdConfigKey;
 
 FOUNDATION_EXPORT NSString * const ADJWBAttributionCallbackConfigKey;
+FOUNDATION_EXPORT NSString * const ADJWBThirdPartySharingSettingsChangedCallbackConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBEventSuccessCallbackConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBEventFailureCallbackConfigKey;
 FOUNDATION_EXPORT NSString * const ADJWBSessionSuccessCallbackConfigKey;

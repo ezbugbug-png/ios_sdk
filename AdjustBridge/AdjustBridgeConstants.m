@@ -50,6 +50,7 @@ NSString * const ADJWBGetAdidMethodName = @"adjust_getAdid";
 NSString * const ADJWBGetAttributionMethodName = @"adjust_getAttribution";
 NSString * const ADJWBGetAdidWithTimeoutMethodName = @"adjust_getAdidWithTimeout";
 NSString * const ADJWBGetAttributionWithTimeoutMethodName = @"adjust_getAttributionWithTimeout";
+NSString * const ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName = @"adjust_getThirdPartySharingSettingsWithTimeout";
 NSString * const ADJWBAppTrackingAuthorizationStatus = @"adjust_appTrackingAuthorizationStatus";
 
 // AdjustWebbridge Config keys
@@ -65,6 +66,7 @@ NSString * const ADJWBNeedsCostConfigKey = @"isCostDataInAttributionEnabled";
 NSString * const ADJWBAllowAdServicesInfoReadingConfigKey = @"isAdServicesEnabled";
 NSString * const ADJWBIsIdfaReadingAllowedConfigKey = @"isIdfaReadingAllowed";
 NSString * const ADJWBIsIdfvReadingAllowedConfigKey = @"isIdfvReadingAllowed";
+NSString * const ADJWBIsFbIdReadingEnabledConfigKey = @"isFbIdReadingEnabled";
 NSString * const ADJWBIsSkanAttributionHandlingEnabledConfigKey = @"isSkanAttributionHandlingEnabled";
 NSString * const ADJWBIsDeferredDeeplinkOpeningEnabledConfigKey = @"isDeferredDeeplinkOpeningEnabled";
 NSString * const ADJWBIsCoppaComplianceEnabledConfigKey = @"isCoppaComplianceEnabled";
@@ -84,6 +86,7 @@ NSString * const ADJWBStoreAppIdConfigKey = @"storeAppId";
 
 // AdjustWebbridge Callbacks method name
 NSString * const ADJWBAttributionCallbackConfigKey = @"attributionCallback";
+NSString * const ADJWBThirdPartySharingSettingsChangedCallbackConfigKey = @"thirdPartySharingSettingsChangedCallback";
 NSString * const ADJWBEventSuccessCallbackConfigKey = @"eventSuccessCallback";
 NSString * const ADJWBEventFailureCallbackConfigKey = @"eventFailureCallback";
 NSString * const ADJWBSessionSuccessCallbackConfigKey = @"sessionSuccessCallback";

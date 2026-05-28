@@ -84,10 +84,10 @@ class ViewControllerSwift: UIViewController {
 
     @IBAction func btnIsSDKEnabledTapped(_sender: UIButton) {
         Adjust.isEnabled { isSDKEnabled in
-            if (isSDKEnabled) {
-                NSLog("SDK is enabled!");
+            if isSDKEnabled {
+                print("SDK is enabled!")
             } else {
-                NSLog("SDK is disabled");
+                print("SDK is disabled")
             }
         }
     }

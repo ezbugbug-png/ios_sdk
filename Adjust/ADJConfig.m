@@ -59,6 +59,7 @@
     _isLinkMeEnabled = NO;
     _isIdfaReadingEnabled = YES;
     _isIdfvReadingEnabled = YES;
+    _isFbIdReadingEnabled = YES;
     _isSkanAttributionEnabled = YES;
     _eventDeduplicationIdsMaxSize = -1;
     _isDeviceIdsReadingOnceEnabled = NO;
@@ -85,6 +86,10 @@
 
 - (void)disableIdfvReading {
     _isIdfvReadingEnabled = NO;
+}
+
+- (void)disableFbIdReading {
+    _isFbIdReadingEnabled = NO;
 }
 
 - (void)disableSkanAttribution {
@@ -159,6 +164,10 @@
 
     if ([delegate respondsToSelector:@selector(adjustAttributionChanged:)]) {
         [self.logger debug:@"Delegate implements adjustAttributionChanged:"];
+        hasResponseDelegate = YES;
+    }
+    if ([delegate respondsToSelector:@selector(adjustThirdPartySharingSettingsChanged:)]) {
+        [self.logger debug:@"Delegate implements adjustThirdPartySharingSettingsChanged:"];
         hasResponseDelegate = YES;
     }
     if ([delegate respondsToSelector:@selector(adjustEventTrackingSucceeded:)]) {
@@ -253,6 +262,7 @@
         copy->_isLinkMeEnabled = self.isLinkMeEnabled;
         copy->_isIdfaReadingEnabled = self.isIdfaReadingEnabled;
         copy->_isIdfvReadingEnabled = self.isIdfvReadingEnabled;
+        copy->_isFbIdReadingEnabled = self.isFbIdReadingEnabled;
         copy->_isDeviceIdsReadingOnceEnabled = self.isDeviceIdsReadingOnceEnabled;
         copy->_storeInfo = [self.storeInfo copyWithZone:zone];
         copy.eventDeduplicationIdsMaxSize = self.eventDeduplicationIdsMaxSize;

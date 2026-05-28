@@ -98,6 +98,7 @@ const BOOL kSkanRegisterLockWindow = NO;
         self.cachedAdidReadCallbacksArray = [[NSMutableArray alloc] init];
         self.cachedAttributionTimeoutCallbacksArray = [[NSMutableArray alloc] init];
         self.cachedAdidTimeoutCallbacksArray = [[NSMutableArray alloc] init];
+        self.cachedThirdPartySharingTimeoutCallbacksArray = [[NSMutableArray alloc] init];
 
     }
     return self;
@@ -137,6 +138,7 @@ const BOOL kSkanRegisterLockWindow = NO;
 @property (nonatomic, copy) NSString* purchaseVerificationPath;
 @property (nonatomic, copy) ADJResolvedDeeplinkBlock cachedDeeplinkResolutionCallback;
 @property (nonatomic, copy) ADJAttribution *attribution;
+@property (nonatomic, copy) ADJThirdPartySharingResult *thirdPartySharingResult;
 @property (nonatomic, strong) ADJOdmManager *odmManager;
 
 - (void)prepareDeeplinkI:(ADJActivityHandler *_Nullable)selfI
@@ -159,6 +161,7 @@ const BOOL kSkanRegisterLockWindow = NO;
     if (self) {
         _attributionCallback = attributionCallback;
         _adidCallback = nil;
+        _thirdPartySharingCallback = nil;
         _timeoutMs = timeoutMs;
         _timeoutBlock = nil;
     }
@@ -171,6 +174,20 @@ const BOOL kSkanRegisterLockWindow = NO;
     if (self) {
         _attributionCallback = nil;
         _adidCallback = adidCallback;
+        _thirdPartySharingCallback = nil;
+        _timeoutMs = timeoutMs;
+        _timeoutBlock = nil;
+    }
+    return self;
+}
+
+- (instancetype)initWithThirdPartySharingCallback:(ADJThirdPartySharingGetterBlock)thirdPartySharingCallback
+                                        timeoutMs:(NSInteger)timeoutMs {
+    self = [super init];
+    if (self) {
+        _attributionCallback = nil;
+        _adidCallback = nil;
+        _thirdPartySharingCallback = thirdPartySharingCallback;
         _timeoutMs = timeoutMs;
         _timeoutBlock = nil;
     }
@@ -243,6 +260,7 @@ const BOOL kSkanRegisterLockWindow = NO;
 
     // read files to have sync values available
     [self readAttribution];
+    [self readThirdPartySharingResult];
     [self readActivityState];
     [self readEventsMetadata];
 
@@ -478,6 +496,12 @@ const BOOL kSkanRegisterLockWindow = NO;
         return;
     }
 
+    // check if it's a third party sharing response
+    if ([responseData isKindOfClass:[ADJThirdPartySharingResponseData class]]) {
+        [self launchThirdPartySharingResponseTasks:(ADJThirdPartySharingResponseData *)responseData];
+        return;
+    }
+
     // check if it's a purchase verification response
     if ([responseData isKindOfClass:[ADJPurchaseVerificationResponseData class]]) {
         [self launchPurchaseVerificationResponseTasks:(ADJPurchaseVerificationResponseData *)responseData];
@@ -514,6 +538,15 @@ const BOOL kSkanRegisterLockWindow = NO;
                 selfInject:self
                      block:^(ADJActivityHandler * selfI) {
                          [selfI launchAttributionResponseTasksI:selfI attributionResponseData:attributionResponseData];
+                     }];
+}
+
+- (void)launchThirdPartySharingResponseTasks:(ADJThirdPartySharingResponseData *)thirdPartySharingResponseData {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+                         [selfI launchThirdPartySharingResponseTasksI:selfI
+                                          thirdPartySharingResponseData:thirdPartySharingResponseData];
                      }];
 }
 
@@ -833,7 +866,7 @@ const BOOL kSkanRegisterLockWindow = NO;
                 timeoutCallback.timeoutBlock = nil;
             }];
         } else {
-            // we should sync the addObject call below, becasue this array is accessed and altered
+            // we should sync the addObject call below, because this array is accessed and altered
             // from ActivityHandler's internal queue and from the main queue (where timeout block is scheduled to run).
             @synchronized (selfI.savedPreLaunch.cachedAttributionTimeoutCallbacksArray) {
                 [selfI.savedPreLaunch.cachedAttributionTimeoutCallbacksArray addObject:timeoutCallback];
@@ -877,10 +910,37 @@ const BOOL kSkanRegisterLockWindow = NO;
                 timeoutCallback.timeoutBlock = nil;
             }];
         } else {
-            // we should sync the addObject call below, becasue this array is accessed and altered
+            // we should sync the addObject call below, because this array is accessed and altered
             // from ActivityHandler's internal queue and from the main queue (where timeout block is scheduled to run).
             @synchronized (selfI.savedPreLaunch.cachedAdidTimeoutCallbacksArray) {
                 [selfI.savedPreLaunch.cachedAdidTimeoutCallbacksArray addObject:timeoutCallback];
+            }
+            // dispatch callback's timeout block
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeoutCallback.timeoutMs * NSEC_PER_MSEC)),
+                           dispatch_get_main_queue(),
+                           timeoutCallback.timeoutBlock);
+        }
+    }];
+}
+
+- (void)thirdPartySharingWithTimeoutCallback:(nonnull ADJTimeoutCallback *)timeoutCallback {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJActivityHandler * selfI) {
+        if (selfI.thirdPartySharingResult != nil) {
+            ADJThirdPartySharingResult *thirdPartySharingResultSnapshot = [selfI.thirdPartySharingResult copy];
+            [ADJUtil launchInMainThread:^{
+                // calling cllback block (client's completion handler) immediately.
+                // thirdPartySharingCallback should be nonnull here.
+                timeoutCallback.thirdPartySharingCallback(thirdPartySharingResultSnapshot);
+                timeoutCallback.thirdPartySharingCallback = nil;
+                timeoutCallback.timeoutBlock = nil;
+            }];
+        } else {
+            // we should sync the addObject call below, because this array is accessed and altered
+            // from ActivityHandler's internal queue and from the main queue (where timeout block is scheduled to run).
+            @synchronized (selfI.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray) {
+                [selfI.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray addObject:timeoutCallback];
             }
             // dispatch callback's timeout block
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeoutCallback.timeoutMs * NSEC_PER_MSEC)),
@@ -1024,7 +1084,10 @@ const BOOL kSkanRegisterLockWindow = NO;
     kForegroundTimerInterval = ADJAdjustFactory.timerInterval;
     kBackgroundTimerInterval = ADJAdjustFactory.timerInterval;
 
-    selfI.packageParams = [ADJPackageParams packageParamsWithSdkPrefix:selfI.adjustConfig.sdkPrefix];
+    BOOL canReadFbId = selfI.adjustConfig.isFbIdReadingEnabled
+        && !selfI.adjustConfig.isCoppaComplianceEnabled;
+    selfI.packageParams = [ADJPackageParams packageParamsWithSdkPrefix:selfI.adjustConfig.sdkPrefix
+                                                    fbIdReadingEnabled:canReadFbId];
 
     // read files that are accessed only in Internal sections
     selfI.globalParameters = [[ADJGlobalParameters alloc] init];
@@ -1127,6 +1190,7 @@ const BOOL kSkanRegisterLockWindow = NO;
 
     [selfI processCachedAttributionReadCallbackI:selfI];
     [selfI processCachedAdidReadCallbackI:selfI];
+    [selfI processCachedThirdPartySharingReadCallbackI:selfI];
 
     if (!isInactive) {
         [selfI.logger debug:@"Start sdk, since the app is already in the foreground"];
@@ -1798,6 +1862,41 @@ const BOOL kSkanRegisterLockWindow = NO;
 
 }
 
+- (void)launchThirdPartySharingResponseTasksI:(ADJActivityHandler *)selfI
+                thirdPartySharingResponseData:(ADJThirdPartySharingResponseData *)thirdPartySharingResponseData {
+    if (thirdPartySharingResponseData.jsonResponse == nil) {
+        return;
+    }
+
+    NSDictionary *thirdPartySharingSettings = [thirdPartySharingResponseData.jsonResponse
+                                               objectForKey:@"third_party_sharing"];
+
+    if (thirdPartySharingSettings == nil || ![thirdPartySharingSettings isKindOfClass:[NSDictionary class]]) {
+        // nothing to update
+        return;
+    }
+
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:thirdPartySharingSettings
+                                                       options:0
+                                                         error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    if (jsonString == nil) {
+        return;
+    }
+
+    ADJThirdPartySharingResult *thirdPartySharingResult =
+    [[ADJThirdPartySharingResult alloc] initWithThirdPartySharingSettings:jsonString];
+    BOOL toLaunchThirdPartySharingSettingsChangedDelegate =
+        [selfI updateThirdPartySharingResultI:selfI thirdPartySharingResult:thirdPartySharingResult];
+
+    if (toLaunchThirdPartySharingSettingsChangedDelegate) {
+        [selfI.logger debug:@"Launching third party sharing settings changed delegate"];
+        [ADJUtil launchInMainThread:selfI.adjustDelegate
+                           selector:@selector(adjustThirdPartySharingSettingsChanged:)
+                         withObject:thirdPartySharingResult];
+    }
+}
+
 - (void)launchPurchaseVerificationResponseTasksI:(ADJActivityHandler *)selfI
                 purchaseVerificationResponseData:(ADJPurchaseVerificationResponseData *)responseData {
     [selfI.logger debug:
@@ -2021,6 +2120,64 @@ const BOOL kSkanRegisterLockWindow = NO;
     }
 }
 
+- (BOOL)updateThirdPartySharingResultI:(ADJActivityHandler *)selfI
+               thirdPartySharingResult:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    if (thirdPartySharingResult == nil) {
+        return NO;
+    }
+
+    if ([thirdPartySharingResult isEqual:selfI.thirdPartySharingResult]) {
+        return NO;
+    }
+
+    // copy third party sharing result property
+    // to avoid using the same object for the callback
+    selfI.thirdPartySharingResult = [thirdPartySharingResult copy];
+    [ADJUserDefaults saveThirdPartySharingResult:selfI.thirdPartySharingResult];
+
+    [selfI processCachedThirdPartySharingReadCallbackI:selfI];
+
+    if (selfI.adjustDelegate == nil) {
+        return NO;
+    }
+
+    if (![selfI.adjustDelegate respondsToSelector:@selector(adjustThirdPartySharingSettingsChanged:)]) {
+        return NO;
+    }
+
+    return YES;
+}
+
+- (void)processCachedThirdPartySharingReadCallbackI:(ADJActivityHandler *)selfI {
+    if (selfI.thirdPartySharingResult == nil) {
+        return;
+    }
+
+    // process timeout third party sharing callbacks
+    NSArray *thirdPartySharingTimeoutCallbacksCopy = nil;
+    // we have to sync the array altering here due to the fact it's accessed from different queues
+    @synchronized (selfI.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray) {
+        thirdPartySharingTimeoutCallbacksCopy = [selfI.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray copy];
+        [selfI.savedPreLaunch.cachedThirdPartySharingTimeoutCallbacksArray removeAllObjects];
+    }
+
+    ADJThirdPartySharingResult *thirdPartySharingResultSnapshot = [selfI.thirdPartySharingResult copy];
+    for (ADJTimeoutCallback *timeoutCallback in thirdPartySharingTimeoutCallbacksCopy) {
+        [ADJUtil launchInMainThread:^{
+            // cancel any pending timeout
+            if (timeoutCallback.timeoutBlock != nil) {
+                dispatch_block_cancel(timeoutCallback.timeoutBlock);
+            }
+
+            if (timeoutCallback.thirdPartySharingCallback != nil) {
+                timeoutCallback.thirdPartySharingCallback(thirdPartySharingResultSnapshot);
+                // null callback to call it only once
+                timeoutCallback.thirdPartySharingCallback = nil;
+                timeoutCallback.timeoutBlock = nil;
+            }
+        }];
+    }
+}
 
 - (void)setEnabledI:(ADJActivityHandler *)selfI enabled:(BOOL)enabled {
     // compare with the saved or internal state
@@ -2685,6 +2842,10 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
                                 objectName:@"Attribution"
                                    classes:allowedClasses
                                 syncObject:[ADJAttribution class]];
+}
+
+- (void)readThirdPartySharingResult {
+    self.thirdPartySharingResult = [ADJUserDefaults getThirdPartySharingResult];
 }
 
 - (void)readEventsMetadata {

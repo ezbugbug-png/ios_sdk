@@ -31,6 +31,9 @@
     [self swizzleCallbackMethod:@selector(adjustAttributionChanged:)
                swizzledSelector:@selector(adjustAttributionChangedWannabeEmpty:)];
 
+    [self swizzleCallbackMethod:@selector(adjustThirdPartySharingSettingsChanged:)
+               swizzledSelector:@selector(adjustThirdPartySharingSettingsChangedWannabeEmpty:)];
+
     [self swizzleCallbackMethod:@selector(adjustEventTrackingSucceeded:)
                swizzledSelector:@selector(adjustEventTrackingSucceededWannabeEmpty:)];
 
@@ -50,6 +53,7 @@
 }
 
 - (void)swizzleAttributionCallback:(BOOL)swizzleAttributionCallback
+ thirdPartySharingSettingsCallback:(BOOL)swizzleThirdPartySharingSettingsCallback
             eventSucceededCallback:(BOOL)swizzleEventSucceededCallback
                eventFailedCallback:(BOOL)swizzleEventFailedCallback
           sessionSucceededCallback:(BOOL)swizzleSessionSucceededCallback
@@ -59,6 +63,11 @@
     if (swizzleAttributionCallback) {
         [self swizzleCallbackMethod:@selector(adjustAttributionChanged:)
                    swizzledSelector:@selector(adjustAttributionChangedWannabe:)];
+    }
+
+    if (swizzleThirdPartySharingSettingsCallback) {
+        [self swizzleCallbackMethod:@selector(adjustThirdPartySharingSettingsChanged:)
+                   swizzledSelector:@selector(adjustThirdPartySharingSettingsChangedWannabe:)];
     }
 
     if (swizzleEventSucceededCallback) {
@@ -233,9 +242,25 @@
     [self.testLibrary sendInfoToServer:self.basePath];
 }
 
+- (void)adjustThirdPartySharingSettingsChangedWannabe:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    NSLog(@"Third party sharing settings changed callback called!");
+
+    NSString *thirdPartySharingSettings = thirdPartySharingResult.thirdPartySharingSettingsJson;
+    if (thirdPartySharingSettings != nil) {
+        [self.testLibrary addInfoToSend:@"third_party_sharing_settings" value:thirdPartySharingSettings];
+    }
+
+    [self.testLibrary sendInfoToServer:self.basePath];
+}
+
 - (void)adjustAttributionChangedWannabeEmpty:(ADJAttribution *)attribution {
     NSLog(@"Attribution callback called!");
     NSLog(@"Attribution: %@", attribution);
+}
+
+- (void)adjustThirdPartySharingSettingsChangedWannabeEmpty:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    NSLog(@"Third party sharing settings changed callback called!");
+    NSLog(@"Third party sharing settings: %@", thirdPartySharingResult);
 }
 
 - (void)adjustEventTrackingSucceededWannabeEmpty:(ADJEventSuccess *)eventSuccessResponseData {

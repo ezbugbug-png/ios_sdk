@@ -19,6 +19,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
 
 @property BOOL isDeferredDeeplinkOpeningEnabled;
 @property (nonatomic, copy) NSString *attributionCallbackName;
+@property (nonatomic, copy) NSString *thirdPartySharingSettingsChangedCallbackName;
 @property (nonatomic, copy) NSString *eventSuccessCallbackName;
 @property (nonatomic, copy) NSString *eventFailureCallbackName;
 @property (nonatomic, copy) NSString *sessionSuccessCallbackName;
@@ -50,6 +51,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
 
 - (void)resetAdjustBridge {
     self.attributionCallbackName = nil;
+    self.thirdPartySharingSettingsChangedCallbackName = nil;
     self.eventSuccessCallbackName = nil;
     self.eventFailureCallbackName = nil;
     self.sessionSuccessCallbackName = nil;
@@ -151,6 +153,11 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
         [Adjust attributionWithTimeout:[timeoutMs integerValue] completionHandler:^(ADJAttribution * _Nullable attribution) {
             [self execJsCallbackWithId:callbackId callbackData:[attribution dictionary]];
         }];
+    } else if ([methodName isEqual:ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName]) {
+        NSNumber *timeoutMs = [parameters objectForKey:@"timeoutMs"];
+        [Adjust thirdPartySharingSettingsWithTimeout:[timeoutMs integerValue] completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharingResult) {
+            [self execJsCallbackWithId:callbackId callbackData:[thirdPartySharingResult dictionary]];
+        }];
     } else if ([methodName isEqual:ADJWBIsEnabledMethodName]) {
         [Adjust isEnabledWithCompletionHandler:^(BOOL isEnabled) {
             [self execJsCallbackWithId:callbackId callbackData:@(isEnabled).description];
@@ -232,6 +239,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
     NSNumber *isAdServicesEnabled = [parameters objectForKey:ADJWBAllowAdServicesInfoReadingConfigKey];
     NSNumber *isIdfaReadingAllowed = [parameters objectForKey:ADJWBIsIdfaReadingAllowedConfigKey];
     NSNumber *isIdfvReadingAllowed = [parameters objectForKey:ADJWBIsIdfvReadingAllowedConfigKey];
+    NSNumber *isFbIdReadingEnabled = [parameters objectForKey:ADJWBIsFbIdReadingEnabledConfigKey];
     NSNumber *isSkanAttributionHandlingEnabled = [parameters objectForKey:ADJWBIsSkanAttributionHandlingEnabledConfigKey];
     NSNumber *isDeferredDeeplinkOpeningEnabled = [parameters objectForKey:ADJWBIsDeferredDeeplinkOpeningEnabledConfigKey];
     NSNumber *isCoppaComplianceEnabled = [parameters objectForKey:ADJWBIsCoppaComplianceEnabledConfigKey];
@@ -247,6 +255,8 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
 
     //Adjust's callbacks
     NSString *attributionCallback = [parameters objectForKey:ADJWBAttributionCallbackConfigKey];
+    NSString *thirdPartySharingSettingsChangedCallback =
+        [parameters objectForKey:ADJWBThirdPartySharingSettingsChangedCallbackConfigKey];
     NSString *eventSuccessCallback = [parameters objectForKey:ADJWBEventSuccessCallbackConfigKey];
     NSString *eventFailureCallback = [parameters objectForKey:ADJWBEventFailureCallbackConfigKey];
     NSString *sessionSuccessCallback = [parameters objectForKey:ADJWBSessionSuccessCallbackConfigKey];
@@ -327,6 +337,12 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
         }
     }
 
+    if ([AdjustBridgeUtil isFieldValid:isFbIdReadingEnabled]) {
+        if ([isFbIdReadingEnabled boolValue] == NO) {
+            [adjustConfig disableFbIdReading];
+        }
+    }
+
     if ([AdjustBridgeUtil isFieldValid:attConsentWaitingSeconds]) {
         [adjustConfig setAttConsentWaitingInterval:[attConsentWaitingSeconds doubleValue]];
     }
@@ -391,6 +407,10 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
     if ([AdjustBridgeUtil isFieldValid:attributionCallback]) {
         self.attributionCallbackName = [self validatedCallbackId:attributionCallback];
     }
+    if ([AdjustBridgeUtil isFieldValid:thirdPartySharingSettingsChangedCallback]) {
+        self.thirdPartySharingSettingsChangedCallbackName =
+            [self validatedCallbackId:thirdPartySharingSettingsChangedCallback];
+    }
     if ([AdjustBridgeUtil isFieldValid:eventSuccessCallback]) {
         self.eventSuccessCallbackName = [self validatedCallbackId:eventSuccessCallback];
     }
@@ -416,6 +436,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
     // set self as delegate if any callback is configured
     // change to swizzle the methods in the future
     if (self.attributionCallbackName != nil
+        || self.thirdPartySharingSettingsChangedCallbackName != nil
         || self.eventSuccessCallbackName != nil
         || self.eventFailureCallbackName != nil
         || self.sessionSuccessCallbackName != nil
@@ -530,6 +551,7 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
         || [methodName isEqual:ADJWBGetAdidWithTimeoutMethodName]
         || [methodName isEqual:ADJWBGetAttributionMethodName]
         || [methodName isEqual:ADJWBGetAttributionWithTimeoutMethodName]
+        || [methodName isEqual:ADJWBGetThirdPartySharingSettingsWithTimeoutMethodName]
         || [methodName isEqual:ADJWBIsEnabledMethodName]
         || [methodName isEqual:ADJWBRequestAppTrackingMethodName]
         || [methodName isEqual:ADJWBAppTrackingAuthorizationStatus];
@@ -593,6 +615,15 @@ static NSUInteger const kADJWBMaxCallbackIdLength = 128;
     }
     [self execJsCallbackWithId:self.attributionCallbackName
                   callbackData:[attribution dictionary]];
+}
+
+- (void)adjustThirdPartySharingSettingsChanged:(ADJThirdPartySharingResult *)thirdPartySharingResult {
+    if (self.thirdPartySharingSettingsChangedCallbackName == nil) {
+        return;
+    }
+
+    [self execJsCallbackWithId:self.thirdPartySharingSettingsChangedCallbackName
+                  callbackData:[thirdPartySharingResult dictionary]];
 }
 
 - (void)adjustEventTrackingSucceeded:(ADJEventSuccess *)eventSuccessResponseData {

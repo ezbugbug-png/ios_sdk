@@ -51,7 +51,7 @@ static NSString * fbAppIdStatic = nil;
             return;
         }
         
-        const ADJUST_WEB_BRIDGE_SDK_PREFIX = 'web-bridge5.6.2';
+        const ADJUST_WEB_BRIDGE_SDK_PREFIX = 'web-bridge5.7.0';
 
         // Adjust
         window.Adjust = {
@@ -209,6 +209,12 @@ static NSString * fbAppIdStatic = nil;
                 const callbackId = window.randomCallbackIdWithPrefix("adjust_getAttributionWithTimeout");
                 this._handleGetterFromObjC(getAttributionCallbackWithTimeout, callbackId);
                 this._postMessage("adjust_getAttributionWithTimeout", { timeoutMs: timeoutMs }, callbackId);
+            },
+
+            getThirdPartySharingSettingsWithTimeout: function(timeoutMs, getThirdPartySharingCallbackWithTimeout) {
+                const callbackId = window.randomCallbackIdWithPrefix("adjust_getThirdPartySharingSettingsWithTimeout");
+                this._handleGetterFromObjC(getThirdPartySharingCallbackWithTimeout, callbackId);
+                this._postMessage("adjust_getThirdPartySharingSettingsWithTimeout", { timeoutMs: timeoutMs }, callbackId);
             },
 
             trackEvent: function(adjustEvent) {
@@ -406,6 +412,7 @@ static NSString * fbAppIdStatic = nil;
             this.isAdServicesEnabled = null;
             this.isIdfaReadingAllowed = null;
             this.isIdfvReadingAllowed = null;
+            this.isFbIdReadingEnabled = null;
             this.isCostDataInAttributionEnabled = null;
             this.isDeferredDeeplinkOpeningEnabled = null;
             this.isSkanAttributionHandlingEnabled = null;
@@ -423,6 +430,7 @@ static NSString * fbAppIdStatic = nil;
 
             //config callbacks
             this.attributionCallback = null;
+            this.thirdPartySharingSettingsChangedCallback = null;
             this.eventSuccessCallback = null;
             this.eventFailureCallback = null;
             this.sessionSuccessCallback = null;
@@ -473,6 +481,9 @@ static NSString * fbAppIdStatic = nil;
         };
         AdjustConfig.prototype.disableIdfvReading = function() {
             this.isIdfvReadingAllowed = false;
+        };
+        AdjustConfig.prototype.disableFbIdReading = function() {
+            this.isFbIdReadingEnabled = false;
         };
         AdjustConfig.prototype.disableSkanAttributionHandling = function() {
             this.isSkanAttributionHandlingEnabled = false;
@@ -525,6 +536,12 @@ static NSString * fbAppIdStatic = nil;
             const callbackId = window.randomCallbackIdWithPrefix("adjust_attributionCallback");
             Adjust._handleCallbackFromObjC(attributionCallback, callbackId);
             this.attributionCallback = callbackId;
+        };
+
+        AdjustConfig.prototype.setThirdPartySharingSettingsChangedCallback = function(thirdPartySharingSettingsChangedCallback) {
+            const callbackId = window.randomCallbackIdWithPrefix("adjust_thirdPartySharingSettingsChangedCallback");
+            Adjust._handleCallbackFromObjC(thirdPartySharingSettingsChangedCallback, callbackId);
+            this.thirdPartySharingSettingsChangedCallback = callbackId;
         };
 
         AdjustConfig.prototype.setEventSuccessCallback = function(eventSuccessCallback) {

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ADJDeeplink.h"
+#import "ADJThirdPartySharingResult.h"
 
 @interface ADJUserDefaults : NSObject
 
@@ -90,5 +91,10 @@
 
 + (BOOL)getGoogleOdmInfoProcessed;
 
++ (void)saveThirdPartySharingResult:(ADJThirdPartySharingResult *)thirdPartySharingResult;
+
++ (ADJThirdPartySharingResult *)getThirdPartySharingResult;
+
++ (void)removeThirdPartySharingResult;
 
 @end

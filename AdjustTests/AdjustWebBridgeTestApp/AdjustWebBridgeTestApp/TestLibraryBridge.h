@@ -23,4 +23,3 @@ static NSString * controlUrl = @"ws://192.168.86.245:1987";
 - (id)initWithAdjustBridge:(AdjustBridge *)adjustBridge;
 
 @end
-

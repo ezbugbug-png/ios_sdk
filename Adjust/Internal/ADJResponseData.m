@@ -56,6 +56,9 @@
         case ADJActivityKindAttribution:
             responseData = [[ADJAttributionResponseData alloc] init];
             break;
+        case ADJActivityKindThirdPartySharing:
+            responseData = [[ADJThirdPartySharingResponseData alloc] init];
+            break;
         case ADJActivityKindPurchaseVerification:
             responseData = [[ADJPurchaseVerificationResponseData alloc] init];
             responseData.purchaseVerificationPackage = activityPackage;
@@ -215,3 +218,6 @@
 
 @end
 
+@implementation ADJThirdPartySharingResponseData
+
+@end

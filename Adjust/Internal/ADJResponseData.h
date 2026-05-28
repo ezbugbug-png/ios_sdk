@@ -101,3 +101,7 @@ typedef NS_ENUM(int, ADJTrackingState) {
 @property (nonatomic, strong) NSURL *deeplink;
 
 @end
+
+@interface ADJThirdPartySharingResponseData : ADJResponseData
+
+@end

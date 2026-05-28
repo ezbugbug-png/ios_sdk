@@ -9,6 +9,7 @@
 #import <AdjustSdk/AdjustSdk.h>
 #import "ATAAdjustDelegate.h"
 #import "ATAAdjustDelegateAttribution.h"
+#import "ATAAdjustDelegateThirdPartySharing.h"
 #import "ATAAdjustDelegateEventFailure.h"
 #import "ATAAdjustDelegateEventSuccess.h"
 #import "ATAAdjustDelegateSessionSuccess.h"
@@ -110,6 +111,8 @@
         [self adidGetter:parameters];
     } else if ([methodName isEqualToString:@"adidGetterWithTimeout"]) {
         [self adidGetterWithTimeout:parameters];
+    }  else if ([methodName isEqualToString:@"tpsSettingsGetter"]) {
+        [self tpsSettingsGetterWithTimeout:parameters];
     } else if ([methodName isEqualToString:@"endFirstSessionDelay"]) {
         [self endFirstSessionDelay:parameters];
     } else if ([methodName isEqualToString:@"coppaComplianceInDelay"]) {
@@ -309,6 +312,13 @@
         }
     }
 
+    if ([parameters objectForKey:@"fbIdReadingEnabled"]) {
+        NSString *fbIdReadingEnabledS = [parameters objectForKey:@"fbIdReadingEnabled"][0];
+        if ([fbIdReadingEnabledS boolValue] == NO) {
+            [adjustConfig disableFbIdReading];
+        }
+    }
+
     if ([parameters objectForKey:@"allowAdServicesInfoReading"]) {
         NSString *allowAdServicesInfoReadingS = [parameters objectForKey:@"allowAdServicesInfoReading"][0];
         if ([allowAdServicesInfoReadingS boolValue] == NO) {
@@ -368,6 +378,13 @@
         self.adjustDelegate =
             [[ATAAdjustDelegateAttribution alloc] initWithTestLibrary:self.testLibrary
                                                           andExtraPath:self.extraPath];
+    }
+
+    if ([parameters objectForKey:@"thirdPartySharingSettingsChangedCallbackSendAll"]) {
+        NSLog(@"thirdPartySharingSettingsChangedCallbackSendAll detected");
+        self.adjustDelegate =
+        [[ATAAdjustDelegateThirdPartySharing alloc] initWithTestLibrary:self.testLibrary
+                                                                 andExtraPath:self.extraPath];
     }
     
     if ([parameters objectForKey:@"sessionCallbackSendSuccess"]) {
@@ -963,6 +980,28 @@
             [self.testLibrary addInfoToSend:@"adid" value:adid];
         } else {
             [self.testLibrary addInfoToSend:@"adid" value:@"nil"];
+        }
+        [self.testLibrary addInfoToSend:@"test_callback_id" value:testCallbackId];
+        [self.testLibrary sendInfoToServer:self.extraPath];
+    }];
+}
+
+- (void)tpsSettingsGetterWithTimeout:(NSDictionary *)parameters {
+    NSString *timeoutS = [parameters objectForKey:@"timeout"][0];
+    int timeout = [timeoutS intValue];
+    NSString *testCallbackId = [parameters objectForKey:@"testCallbackId"][0];
+
+    [Adjust thirdPartySharingSettingsWithTimeout:timeout
+                               completionHandler:^(ADJThirdPartySharingResult * _Nullable thirdPartySharingResult) {
+        if (thirdPartySharingResult != nil) {
+            if (thirdPartySharingResult.thirdPartySharingSettingsJson != nil) {
+                [self.testLibrary addInfoToSend:@"third_party_sharing"
+                                          value:thirdPartySharingResult.thirdPartySharingSettingsJson];
+            } else {
+                [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
+            }
+        } else {
+            [self.testLibrary addInfoToSend:@"third_party_sharing" value:@"nil"];
         }
         [self.testLibrary addInfoToSend:@"test_callback_id" value:testCallbackId];
         [self.testLibrary sendInfoToServer:self.extraPath];

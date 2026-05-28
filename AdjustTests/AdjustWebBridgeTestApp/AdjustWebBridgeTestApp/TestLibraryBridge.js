@@ -293,6 +293,14 @@ AdjustCommandExecutor.prototype.config = function(params) {
         }
     }
 
+    if ('fbIdReadingEnabled' in params) {
+        var fbIdReadingEnabledS = getFirstValue(params, 'fbIdReadingEnabled');
+        var fbIdReadingEnabled = fbIdReadingEnabledS == 'true';
+        if (fbIdReadingEnabled == false) {
+            adjustConfig.disableFbIdReading();
+        }
+    }
+
     if ('allowSkAdNetworkHandling' in params) {
         var allowSkAdNetworkHandlingS = getFirstValue(params, 'allowSkAdNetworkHandling');
         var allowSkAdNetworkHandling = allowSkAdNetworkHandlingS == 'true';
@@ -372,6 +380,22 @@ AdjustCommandExecutor.prototype.config = function(params) {
                 addInfoToSend('cost_amount', attribution.costAmount);
                 addInfoToSend('cost_currency', attribution.costCurrency);
                 addInfoToSend('json_response', JSON.stringify(attribution.jsonResponse));
+                sendInfoToServer(extraPath);
+            }
+        );
+    }
+
+    if ('thirdPartySharingSettingsChangedCallbackSendAll' in params) {
+        console.log('AdjustCommandExecutor.prototype.config thirdPartySharingSettingsChangedCallbackSendAll');
+        var extraPath = this.extraPath;
+        adjustConfig.setThirdPartySharingSettingsChangedCallback(
+            function(result) {
+                console.log('thirdPartySharingSettingsChangedCallback: ' + JSON.stringify(result));
+                if (result != null) {
+                    addInfoToSend('third_party_sharing_settings', result.thirdPartySharingSettingsJson);
+                } else {
+                    addInfoToSend('third_party_sharing_settings', null);
+                }
                 sendInfoToServer(extraPath);
             }
         );
@@ -755,6 +779,24 @@ AdjustCommandExecutor.prototype.adidGetterWithTimeout = function(params) {
         } else {
             addInfoToSend('adid', 'nil');
         }
+        addInfoToSend('test_callback_id', testCallbackId);
+        sendInfoToServer(extraPath);
+    });
+};
+
+AdjustCommandExecutor.prototype.tpsSettingsGetter = function(params) {
+    var extraPath = this.extraPath;
+    var timeoutS = getFirstValue(params, 'timeout');
+    var timeout = parseInt(timeoutS);
+    var testCallbackId = getFirstValue(params, 'testCallbackId');
+
+    Adjust.getThirdPartySharingSettingsWithTimeout(timeout, function(result) {
+        if (result != null) {
+            addInfoToSend('third_party_sharing', result.thirdPartySharingSettingsJson);
+        } else {
+            addInfoToSend('third_party_sharing', 'nil');
+        }
+
         addInfoToSend('test_callback_id', testCallbackId);
         sendInfoToServer(extraPath);
     });
