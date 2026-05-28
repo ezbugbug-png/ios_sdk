@@ -1,3 +1,9 @@
+### Version 5.7.0 (28th May 2026)
+#### Added
+- Added `thirdPartySharingSettingsWithTimeout:completionHandler:` to the `Adjust` API and `adjustThirdPartySharingSettingsChanged:` to `AdjustDelegate` for reading current third-party-sharing settings from the Adjust backend and receiving updates when they change.
+
+---
+
 ### Version 5.6.2 (17th April 2026)
 #### Changed
 - Updated the Adjust Signature library version to 3.67.0.
