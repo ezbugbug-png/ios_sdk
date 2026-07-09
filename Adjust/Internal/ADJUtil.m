@@ -1357,8 +1357,10 @@ static NSString * const kDateFormat                 = @"yyyy-MM-dd'T'HH:mm:ss.SS
                     [inv getReturnValue:&tmpResult];
                     NSMutableDictionary *result = tmpResult;
                     CFStringRef *indexRef = dlsym(RTLD_SELF, [[ADJAdditions adjJoin:@"N", @"S", @"file", @"creation", @"date", nil] UTF8String]);
-                    NSString *ref = (__bridge_transfer id) *indexRef;
-                    installTime = result[ref];
+                    if (indexRef != NULL && *indexRef != NULL) {
+                        NSString *ref = (__bridge id)*indexRef;
+                        installTime = result[ref];
+                    }
                 }
             }
         }

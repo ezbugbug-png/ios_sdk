@@ -113,4 +113,42 @@ static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
     return [first isEqualToNumber:second];
 }
 
++ (NSString *)adjFreshCopyOfString:(NSString *)string {
+    if (string == nil) {
+        return nil;
+    }
+    return [[string mutableCopy] copy];
+}
+
++ (NSDictionary *)adjFreshStringDictionary:(NSDictionary *)dictionary {
+    if (dictionary == nil) {
+        return nil;
+    }
+    return [[ADJAdditions adjFreshMutableStringDictionary:dictionary] copy];
+}
+
++ (NSMutableDictionary *)adjFreshMutableStringDictionary:(NSDictionary *)dictionary {
+    if (dictionary == nil) {
+        return nil;
+    }
+    NSMutableDictionary *freshDictionary = [NSMutableDictionary dictionaryWithCapacity:dictionary.count];
+    for (id key in dictionary) {
+        id value = [dictionary objectForKey:key];
+        if (value == nil) {
+            continue;
+        }
+        NSString *keyString = [key isKindOfClass:[NSString class]] ? (NSString *)key : [key description];
+        NSString *freshKey = [ADJAdditions adjFreshCopyOfString:keyString];
+        if (freshKey == nil) {
+            continue;
+        }
+        if ([value isKindOfClass:[NSString class]]) {
+            [freshDictionary setObject:[ADJAdditions adjFreshCopyOfString:(NSString *)value] forKey:freshKey];
+        } else {
+            [freshDictionary setObject:value forKey:freshKey];
+        }
+    }
+    return freshDictionary;
+}
+
 @end

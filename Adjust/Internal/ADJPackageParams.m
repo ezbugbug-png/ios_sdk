@@ -10,6 +10,7 @@
 
 #import "ADJPackageParams.h"
 #import "ADJUtil.h"
+#import "ADJAdditions.h"
 
 @implementation ADJPackageParams
 
@@ -33,16 +34,16 @@
     }
 
     self.osName = @"ios";
-    self.idfv = [ADJUtil idfv];
+    self.idfv = [ADJAdditions adjFreshCopyOfString:[ADJUtil idfv]];
     if (fbIdReadingEnabled == YES) {
-        self.fbAnonymousId = [ADJUtil fbAnonymousId];
+        self.fbAnonymousId = [ADJAdditions adjFreshCopyOfString:[ADJUtil fbAnonymousId]];
     }
-    self.bundleIdentifier = [ADJUtil bundleIdentifier];
-    self.buildNumber = [ADJUtil buildNumber];
-    self.versionNumber = [ADJUtil versionNumber];
-    self.deviceType = [ADJUtil deviceType];
-    self.deviceName = [ADJUtil deviceName];
-    self.osVersion = [ADJUtil osVersion];
+    self.bundleIdentifier = [ADJAdditions adjFreshCopyOfString:[ADJUtil bundleIdentifier]];
+    self.buildNumber = [ADJAdditions adjFreshCopyOfString:[ADJUtil buildNumber]];
+    self.versionNumber = [ADJAdditions adjFreshCopyOfString:[ADJUtil versionNumber]];
+    self.deviceType = [ADJAdditions adjFreshCopyOfString:[ADJUtil deviceType]];
+    self.deviceName = [ADJAdditions adjFreshCopyOfString:[ADJUtil deviceName]];
+    self.osVersion = [ADJAdditions adjFreshCopyOfString:[ADJUtil osVersion]];
     self.installedAt = [ADJUtil installedAt];
     self.startedAt = [ADJUtil startedAt];
     if (sdkPrefix == nil) {

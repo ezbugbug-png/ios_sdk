@@ -97,8 +97,8 @@ NSString * const ADJOdmInfoParameter = @"odm_info";
     eventPackage.activityKind = ADJActivityKindEvent;
     eventPackage.suffix = [self eventSuffix:event];
     eventPackage.parameters = parameters;
-    eventPackage.callbackParameters = event.callbackParameters;
-    eventPackage.partnerParameters = event.partnerParameters;
+    eventPackage.callbackParameters = [ADJAdditions adjFreshStringDictionary:event.callbackParameters];
+    eventPackage.partnerParameters = [ADJAdditions adjFreshStringDictionary:event.partnerParameters];
 
     return eventPackage;
 }
@@ -121,8 +121,8 @@ NSString * const ADJOdmInfoParameter = @"odm_info";
     adRevenuePackage.activityKind = ADJActivityKindAdRevenue;
     adRevenuePackage.suffix = @"";
     adRevenuePackage.parameters = parameters;
-    adRevenuePackage.callbackParameters = adRevenue.callbackParameters;
-    adRevenuePackage.partnerParameters = adRevenue.partnerParameters;
+    adRevenuePackage.callbackParameters = [ADJAdditions adjFreshStringDictionary:adRevenue.callbackParameters];
+    adRevenuePackage.partnerParameters = [ADJAdditions adjFreshStringDictionary:adRevenue.partnerParameters];
 
     return adRevenuePackage;
 }
@@ -193,8 +193,8 @@ NSString * const ADJOdmInfoParameter = @"odm_info";
     subscriptionPackage.activityKind = ADJActivityKindSubscription;
     subscriptionPackage.suffix = @"";
     subscriptionPackage.parameters = parameters;
-    subscriptionPackage.callbackParameters = subscription.callbackParameters;
-    subscriptionPackage.partnerParameters = subscription.partnerParameters;
+    subscriptionPackage.callbackParameters = [ADJAdditions adjFreshStringDictionary:subscription.callbackParameters];
+    subscriptionPackage.partnerParameters = [ADJAdditions adjFreshStringDictionary:subscription.partnerParameters];
 
     return subscriptionPackage;
 }
@@ -341,7 +341,7 @@ NSString * const ADJOdmInfoParameter = @"odm_info";
     if (value == nil || [value isEqualToString:@""]) {
         return;
     }
-    [parameters setObject:value forKey:key];
+    [parameters setObject:[ADJAdditions adjFreshCopyOfString:value] forKey:key];
 }
 
 #pragma mark - Private & helper methods

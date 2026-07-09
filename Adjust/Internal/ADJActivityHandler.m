@@ -3125,7 +3125,8 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
         [selfI.logger warn:@"Key %@ will be overwritten", key];
     }
 
-    [selfI.globalParameters.callbackParameters setObject:param forKey:key];
+    [selfI.globalParameters.callbackParameters setObject:[ADJAdditions adjFreshCopyOfString:param]
+                                                  forKey:[ADJAdditions adjFreshCopyOfString:key]];
     [selfI writeGlobalCallbackParametersI:selfI];
 }
 
@@ -3159,7 +3160,8 @@ remainsPausedMessage:(NSString *)remainsPausedMessage
     }
 
 
-    [selfI.globalParameters.partnerParameters setObject:param forKey:key];
+    [selfI.globalParameters.partnerParameters setObject:[ADJAdditions adjFreshCopyOfString:param]
+                                                 forKey:[ADJAdditions adjFreshCopyOfString:key]];
     [selfI writeGlobalPartnerParametersI:selfI];
 }
 

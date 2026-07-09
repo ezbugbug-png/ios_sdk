@@ -24,4 +24,10 @@
 
 + (BOOL)adjIsNumberEqual:(NSNumber *)first toNumber:(NSNumber *)second;
 
++ (NSString *)adjFreshCopyOfString:(NSString *)string;
+
++ (NSDictionary *)adjFreshStringDictionary:(NSDictionary *)dictionary;
+
++ (NSMutableDictionary *)adjFreshMutableStringDictionary:(NSDictionary *)dictionary;
+
 @end

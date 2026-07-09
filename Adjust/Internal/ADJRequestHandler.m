@@ -75,9 +75,8 @@ static NSString * const ADJMethodPOST = @"MethodPOST";
 - (void)sendPackageByPOST:(ADJActivityPackage *)activityPackage
         sendingParameters:(NSDictionary *)sendingParameters
 {
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]
-                                       initWithDictionary:activityPackage.parameters
-                                       copyItems:YES];
+    NSMutableDictionary *parameters =
+        [ADJAdditions adjFreshMutableStringDictionary:activityPackage.parameters];
     NSString *path = [activityPackage.path copy];
     NSString *clientSdk = [activityPackage.clientSdk copy];
     ADJActivityKind activityKind = activityPackage.activityKind;
@@ -126,9 +125,8 @@ static NSString * const ADJMethodPOST = @"MethodPOST";
 - (void)sendPackageByGET:(ADJActivityPackage *)activityPackage
        sendingParameters:(NSDictionary *)sendingParameters
 {
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc]
-                                       initWithDictionary:activityPackage.parameters
-                                       copyItems:YES];
+    NSMutableDictionary *parameters =
+        [ADJAdditions adjFreshMutableStringDictionary:activityPackage.parameters];
     NSString *path = [activityPackage.path copy];
     NSString *clientSdk = [activityPackage.clientSdk copy];
     ADJActivityKind activityKind = activityPackage.activityKind;
@@ -471,7 +469,7 @@ authorizationHeader:(NSString *)authorizationHeader
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setValue:clientSdk forHTTPHeaderField:@"Client-Sdk"];
     // in case of beta release, specify build version here
-    // [request setValue:@"1" forHTTPHeaderField:@"Beta-Version"];
+    [request setValue:@"6" forHTTPHeaderField:@"Beta-Version"];
 
     NSMutableArray<NSString *> *kvParameters =
         [NSMutableArray arrayWithCapacity:mergedParameters.count];
@@ -514,7 +512,7 @@ authorizationHeader:(NSString *)authorizationHeader
     request.HTTPMethod = @"GET";
     [request setValue:clientSdk forHTTPHeaderField:@"Client-Sdk"];
     // in case of beta release, specify build version here
-    // [request setValue:@"1" forHTTPHeaderField:@"Beta-Version"];
+    [request setValue:@"6" forHTTPHeaderField:@"Beta-Version"];
     return request;
 }
 
