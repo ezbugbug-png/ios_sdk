@@ -973,4 +973,54 @@ static NSString * const kPackageQueueFilename = @"AdjustIoPackageQueue";
     XCTAssertEqual(source.activityKind, ADJActivityKindSession);
 }
 
+- (void)testPackageQueueWriteAndTeardownUnderConcurrentAccess {
+    __block NSException *caughtException = nil;
+
+    NSUInteger iterationCount = 200;
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t writerQueue =
+        dispatch_queue_create("io.adjust.tests.packagequeue.write-teardown.writer", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_queue_t teardownQueue =
+        dispatch_queue_create("io.adjust.tests.packagequeue.write-teardown.teardown", DISPATCH_QUEUE_CONCURRENT);
+
+    for (NSUInteger i = 0; i < iterationCount; i++) {
+        ADJPackageHandler *writer = [[ADJPackageHandler alloc] init];
+        writer.packageQueue = [NSMutableArray arrayWithObjects:
+            [self buildQueuePackageWithIndex:i],
+            [self buildQueuePackageWithIndex:i + 1000],
+            nil];
+
+        dispatch_group_async(group, writerQueue, ^{
+            @autoreleasepool {
+                @try {
+                    [writer writePackageQueueS:writer];
+                } @catch (NSException *exception) {
+                    @synchronized (self) {
+                        if (caughtException == nil) {
+                            caughtException = exception;
+                        }
+                    }
+                }
+            }
+        });
+
+        dispatch_group_async(group, teardownQueue, ^{
+            @autoreleasepool {
+                @try {
+                    [writer teardown];
+                } @catch (NSException *exception) {
+                    @synchronized (self) {
+                        if (caughtException == nil) {
+                            caughtException = exception;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    XCTAssertNil(caughtException);
+}
+
 @end

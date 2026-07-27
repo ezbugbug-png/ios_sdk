@@ -414,22 +414,26 @@ startsSending:(BOOL)startsSending
 }
 
 - (void)writePackageQueueS:(ADJPackageHandler *)selfS {
-    if (selfS.packageQueue == nil) {
-        return;
-    }
-
-    NSMutableArray *queueSnapshot = [NSMutableArray arrayWithCapacity:selfS.packageQueue.count];
-    for (ADJActivityPackage *activityPackage in selfS.packageQueue) {
-        if (![activityPackage isKindOfClass:[ADJActivityPackage class]]) {
-            continue;
+    // Same lock as teardown, so we never archive a queue mid-clear
+    [ADJUtil launchSynchronisedWithObject:[ADJPackageHandler class]
+                                    block:^{
+        if (selfS.packageQueue == nil) {
+            return;
         }
-        [queueSnapshot addObject:[activityPackage deepCopy]];
-    }
-
-    [ADJUtil writeObject:queueSnapshot
-                fileName:kPackageQueueFilename
-              objectName:@"Package queue"
-              syncObject:[ADJPackageHandler class]];
+        
+        NSMutableArray *queueSnapshot = [NSMutableArray arrayWithCapacity:selfS.packageQueue.count];
+        for (ADJActivityPackage *activityPackage in selfS.packageQueue) {
+            if (![activityPackage isKindOfClass:[ADJActivityPackage class]]) {
+                continue;
+            }
+            [queueSnapshot addObject:[activityPackage deepCopy]];
+        }
+        
+        [ADJUtil writeObject:queueSnapshot
+                    fileName:kPackageQueueFilename
+                  objectName:@"Package queue"
+                  syncObject:[ADJPackageHandler class]];
+    }];
 }
 
 - (void)teardownPackageQueueS {
