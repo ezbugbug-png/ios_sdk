@@ -1,0 +1,83 @@
+name: security-poc-ios-deeplink-openurl
+
+on:
+  push:
+    branches:
+      - 'poc/**'
+  workflow_dispatch: {}
+
+jobs:
+  run-poc-test:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode + toolchain versions
+        run: |
+          xcodebuild -version
+          xcrun simctl list runtimes
+
+      - name: Pick an available iOS Simulator device
+        id: sim
+        run: |
+          set -euo pipefail
+          NAME=$(xcrun simctl list devices available -j \
+            | python3 -c "
+import json,sys
+data = json.load(sys.stdin)
+candidates = []
+for runtime, devices in data.get('devices', {}).items():
+    if 'iOS' not in runtime:
+        continue
+    for d in devices:
+        if d.get('isAvailable') and 'iPhone' in d.get('name', ''):
+            candidates.append((runtime, d['name']))
+candidates.sort(reverse=True)
+print(candidates[0][1] if candidates else '')
+")
+          if [ -z "$NAME" ]; then
+            echo "No iPhone simulator found, falling back to 'iPhone 15'"
+            NAME="iPhone 15"
+          fi
+          echo "Using simulator device: $NAME"
+          echo "device_name=$NAME" >> "$GITHUB_OUTPUT"
+
+      - name: List schemes (sanity check)
+        run: xcodebuild -project Adjust.xcodeproj -list
+
+      - name: Run AdjustUnitTests (security PoC: ios-deeplink-openurl-no-validation)
+        id: run_tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Adjust.xcodeproj \
+            -scheme AdjustUnitTests \
+            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.device_name }}" \
+            -only-testing:AdjustUnitTests/ADJDeeplinkOpenURLPoCTests \
+            -resultBundlePath poc-test-result.xcresult \
+            2>&1 | tee poc-test-output.log
+
+      - name: Print captured PoC result line
+        if: always()
+        run: |
+          grep -n "ADJ-POC-RESULT" poc-test-output.log || echo "no ADJ-POC-RESULT line found"
+          echo "---- test summary ----"
+          grep -nE "Test Suite|Test Case|PASSED|FAILED|error:" poc-test-output.log | tail -100 || true
+
+      - name: Upload full test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: poc-test-log
+          path: poc-test-output.log
+          if-no-files-found: warn
+
+      - name: Upload xcresult bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: poc-test-xcresult
+          path: poc-test-result.xcresult
+          if-no-files-found: warn
