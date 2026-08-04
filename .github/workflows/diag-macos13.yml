@@ -1,0 +1,11 @@
+name: diag-macos13
+on:
+  push:
+    branches:
+      - 'poc/**'
+jobs:
+  diag:
+    runs-on: macos-13
+    steps:
+      - run: echo "diagnostic macos-13 run ok"
+      - run: xcodebuild -version
