@@ -1,0 +1,10 @@
+name: diag-ubuntu
+on:
+  push:
+    branches:
+      - 'poc/**'
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "diagnostic ubuntu run ok"
